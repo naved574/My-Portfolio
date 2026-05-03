@@ -6,8 +6,9 @@ const startServer = async () => {
   try {
     await connectDB();
 
-    const server = app.listen(env.PORT, () => {
-      console.log(`Portfolio API running at http://localhost:${env.PORT}`);
+    const PORT = process.env.PORT || env.PORT || 3000;
+    const server = app.listen(PORT, () => {
+      console.log(`Portfolio API running at http://localhost:${PORT}`);
     });
 
     const shutdown = () => {
