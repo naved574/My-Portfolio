@@ -11,7 +11,7 @@ app.use(
   cors({
     origin:[ 
       env.CLIENT_URL,
-      "https://my-portfolio-two-kappa-73.vercel.app"
+      "https://dev-naved-portfolio-03.vercel.app/",
     ],
     credentials: true,
   })
