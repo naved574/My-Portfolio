@@ -5,7 +5,8 @@ import { CheckCircle2, Mail, Send, Github, Linkedin } from "lucide-react";
 import SectionHeading from "@/components/common/SectionHeading";
 import { contactSchema, type ContactForm } from "@/utils/validators";
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000/api";
+// const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Contact() {
   const [form, setForm] = useState<ContactForm>({ name: "", email: "", message: "" });
