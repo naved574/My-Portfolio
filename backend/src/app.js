@@ -9,7 +9,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: env.CLIENT_URL,
+    origin:[ 
+      env.CLIENT_URL,
+      "https://my-portfolio-two-kappa-73.vercel.app"
+    ],
     credentials: true,
   })
 );
