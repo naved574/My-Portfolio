@@ -28,7 +28,7 @@ const Animation = () => {
                             ref={videoRef}
                             className={`h-full w-full object-cover transition-opacity duration-700 ${videoReady ? "opacity-100" : "opacity-0"
                                 }`}
-                            src='/gall.mp4'
+                            src='/'
                             autoPlay
                             loop
                             muted
@@ -44,7 +44,7 @@ const Animation = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                         // className="h-[350px] md:h-[450px] lg:h-[500px]"
-                        className="h-[80vh] w-[60vw]"
+                        className="bg-slate-900 rounded-4xl cursor-pointer h-[80vh] w-[60vw]"
                     >
                         <Suspense fallback={<div className="w-full h-full flex items-center justify-center text-muted-foreground">Loading 3D…</div>}>
                             <Ball />
