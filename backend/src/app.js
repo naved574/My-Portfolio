@@ -9,10 +9,12 @@ const app = express();
 
 app.use(
   cors({
-    origin:[ 
-      env.CLIENT_URL,
-      "https://dev-naved-portfolio-03.vercel.app/",
-    ],
+    origin: "*",
+  // cors({
+  //   origin:[ 
+  //     env.CLIENT_URL,
+  //     "https://dev-naved-portfolio-03.vercel.app/",
+  //   ],
     credentials: true,
   })
 );
