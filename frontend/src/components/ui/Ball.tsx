@@ -17,7 +17,6 @@ const RotatingShape = () => {
     meshRef.current.rotation.y = t * 0.15;
     
     // 2. Cursor Movement (Parallax)
-    // Mouse position ke base par thoda tilt aur movement dena
     const targetX = state.mouse.x * 0.5;
     const targetY = state.mouse.y * 0.5;
     
@@ -89,9 +88,9 @@ const Ball = () => {
       <OrbitControls 
         enableZoom={true} 
         enablePan={false} 
-        enableRotate={false} // Mouse movement humne manually handle kiya hai upar
-        minDistance={3} 
-        maxDistance={8} 
+        enableRotate={false} 
+        minDistance={5} 
+        maxDistance={10} 
       />
     </Canvas>
   );

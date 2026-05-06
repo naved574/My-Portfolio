@@ -51,7 +51,7 @@ export default function Hero() {
           />
         )}
         {/* Light overlays for readability */}
-        <div className="absolute inset-0 bg-white/70" />
+        <div className="absolute inset-0 bg-white/50" />
         <div className="absolute inset-0 bg-gradient-to-b from-white via-white/60 to-white" />
         <div className="absolute inset-0 bg-grid opacity-[0.35]" />
       </div>
@@ -83,8 +83,10 @@ export default function Hero() {
             transition={{ delay: 0.12, duration: 0.6 }}
             className="font-display mt-5 text-4xl font-bold leading-[1.05] tracking-tight text-[color:var(--color-text)] md:text-6xl"
           >
+            
             Hi, I'm <span className="text-primary">Mohmad Naved</span> —<br className="hidden md:block" />{" "}
             a full-stack developer
+            
           </motion.h1>
 
           <motion.p

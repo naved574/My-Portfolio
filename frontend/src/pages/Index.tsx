@@ -11,7 +11,7 @@ import Footer from "@/components/layout/Footer";
 
 export default function Index() {
   return (
-    <div className="min-h-screen bg-white text-[color:var(--color-text)]">
+    <div className="min-h-screen bg-[color:var(--color-bg)] text-[color:var(--color-text)]">
       <ScrollProgress />
       <Navbar />
       <main>

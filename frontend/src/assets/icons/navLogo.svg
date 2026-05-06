@@ -1,0 +1,121 @@
+<svg width="220" height="50" viewBox="120 25 120 50" fill="none" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <defs>
+
+    <!-- Premium Minimal Gradient -->
+    <linearGradient id="minimalGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"></stop>
+      <stop offset="50%" stop-color="#6366F1"></stop>
+      <stop offset="100%" stop-color="#06B6D4"></stop>
+    </linearGradient>
+
+    <!-- Softer Glow -->
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.2" result="blur"></feGaussianBlur>
+      <feMerge>
+        <feMergeNode in="blur"></feMergeNode>
+        <feMergeNode in="SourceGraphic"></feMergeNode>
+      </feMerge>
+    </filter>
+
+    <style>
+
+      .logo-text {
+        font-family:
+          'Sora',
+          'Space Grotesk',
+          'Inter',
+          sans-serif;
+
+        font-size: 35px;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+      }
+
+      .dev {
+        fill: #c7cdd6;
+        opacity: 0;
+        animation: smoothFade 1s ease forwards;
+      }
+
+      .naved {
+        fill: url(#minimalGradient);
+        opacity: 0;
+        animation: smoothFade 1s ease forwards 0.25s;
+      }
+
+      .cursor {
+        fill: #06B6D4;
+        font-family: 'JetBrains Mono', monospace;
+        animation: blink 1.2s infinite;
+      }
+
+      
+
+      /* Smooth Animations */
+
+      @keyframes smoothFade {
+        from {
+          opacity: 0;
+          transform: translateY(1px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes smoothFadeIcon {
+        from {
+          opacity: 0;
+          transform: translateY(10px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes blink {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      /* Dark Mode */
+
+      @media (prefers-color-scheme: dark) {
+
+        .dev {
+          fill: #E5E7EB;
+        }
+
+        .naved {
+          filter: url(#softGlow);
+        }
+
+        .cursor {
+          filter: url(#softGlow);
+        }
+      }
+
+    </style>
+
+  </defs>
+
+  <!-- Brand Text -->
+
+  <text x="82" y="63" class="logo-text">
+
+    <tspan class="dev">Dev.</tspan>
+
+    <tspan class="naved">Naved</tspan>
+
+    <tspan class="cursor">_</tspan>
+
+  </text>
+
+</svg>

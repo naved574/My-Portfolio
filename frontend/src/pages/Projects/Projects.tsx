@@ -117,7 +117,7 @@ export default function Projects() {
   const scrollTo = (i: number) => emblaApi?.scrollTo(i);
 
   return (
-    <section id="projects" className="relative bg-[color:var(--color-surface)] py-24 md:py-32">
+    <section id="projects" className="relative dark:bg-[color:var(--color-text)] dark:text-[color:var(--color-text)] py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <SectionHeading
           eyebrow="Selected Work"
@@ -154,13 +154,13 @@ export default function Projects() {
                         {p.stack.map((s) => (
                           <span
                             key={s}
-                            className="rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-2.5 py-0.5 text-[11px] font-medium text-[color:var(--color-muted)]"
+                            className="rounded-full border border-[color:var(--color-border)] bg-black px-2.5 py-0.5 text-[11px] font-medium text-white"
                           >
                             {s}
                           </span>
                         ))}
                       </div>
-                      <h3 className="font-display mt-3 text-2xl font-bold text-[color:var(--color-text)]">
+                      <h3 className="font-display mt-3 text-2xl font-bold text-black">
                         {p.title}
                       </h3>
                       <p className="mt-2 text-sm leading-relaxed text-[color:var(--color-muted)]">
@@ -172,7 +172,7 @@ export default function Projects() {
                             href={p.live}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 rounded-full bg-[color:var(--color-text)] px-3.5 py-1.5 text-xs font-medium text-white hover:bg-black"
+                            className="inline-flex items-center gap-1.5 rounded-full bg-black px-3.5 py-1.5 text-xs font-medium text-white hover:bg-black"
                           >
                             <ExternalLink size={13} /> Live
                           </a>
@@ -182,7 +182,7 @@ export default function Projects() {
                             href={p.code}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--color-border)] bg-white px-3.5 py-1.5 text-xs font-medium text-[color:var(--color-text)] hover:border-[color:var(--color-text)]"
+                            className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--color-border)] bg-white px-3.5 py-1.5 text-xs font-medium text-black hover:border-[color:var(--color-text)]"
                           >
                             <Github size={13} /> Code
                           </a>
@@ -198,18 +198,18 @@ export default function Projects() {
 
         {/* Controls */}
         <div className="mx-auto mt-8 flex max-w-6xl items-center justify-between gap-4 px-5 md:px-8">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center bg-[color:var(--color-surface)] gap-2">
             <button
               onClick={scrollPrev}
               aria-label="Previous project"
-              className="grid h-10 w-10 place-items-center rounded-full border border-[color:var(--color-border)] bg-white transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
+              className="grid h-10 w-10 place-items-center rounded-full border border-[color:var(--color-border)]  transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
             >
               <ChevronLeft size={18} />
             </button>
             <button
               onClick={scrollNext}
               aria-label="Next project"
-              className="grid h-10 w-10 place-items-center rounded-full border border-[color:var(--color-border)] bg-white transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
+              className="grid h-10 w-10 place-items-center rounded-full border border-[color:var(--color-border)]  transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
             >
               <ChevronRight size={18} />
             </button>
@@ -221,9 +221,8 @@ export default function Projects() {
                 key={i}
                 onClick={() => scrollTo(i)}
                 aria-label={`Go to project ${i + 1}`}
-                className={`h-1.5 rounded-full transition-all ${
-                  i === selected ? "w-6 bg-[color:var(--color-text)]" : "w-1.5 bg-[color:var(--color-border)]"
-                }`}
+                className={`h-1.5 rounded-full transition-all ${i === selected ? "w-6 bg-[color:var(--color-text)]" : "w-1.5 bg-[color:var(--color-border)]"
+                  }`}
               />
             ))}
           </div>
@@ -231,7 +230,7 @@ export default function Projects() {
           <button
             onClick={toggle}
             aria-label={isPlaying ? "Pause autoplay" : "Play autoplay"}
-            className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-white px-4 py-2 text-sm font-medium text-[color:var(--color-text)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
+            className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-4 py-2 text-sm font-medium text-[color:var(--color-text)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
           >
             {isPlaying ? <Pause size={14} /> : <Play size={14} />}
             {isPlaying ? "Pause" : "Play"}

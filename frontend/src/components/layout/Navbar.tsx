@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Menu, X, Download } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useActiveSection } from "@/hooks/useActiveSection";
-import Logo from "@/assets/icons/logo.svg";
+import Logo from "@/assets/icons/navLogo.svg";
+import ThemeToggle from "@/components/layout/ThemeToggle";
 
 const links = [
   { id: "home", label: "Home" },
@@ -35,8 +36,8 @@ export default function Navbar() {
     <header
       className={`fixed inset-x-0  top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "border-b border-[color:var(--color-border)] bg-white/80 backdrop-blur-md"
-          : "border-b border-transparent bg-white/0"
+          ? "border-b border-[color:var(--color-border)] [background-color:color-mix(in_srgb,var(--color-bg)_80%,transparent)] backdrop-blur-md"
+          : "border-b border-transparent bg-transparent"
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:px-8">
@@ -45,7 +46,7 @@ export default function Navbar() {
           className="font-display text-lg font-bold tracking-tight"
           aria-label="Home"
         >
-          <div className="grid place-items-center w-32 rounded-[10px] cursor-pointer">
+          <div className="grid place-items-center w-45 rounded-[10px] cursor-pointer">
            <img src={Logo} alt="Logo" className="w-full h-full" />
           </div>
         </button>
@@ -78,10 +79,11 @@ export default function Navbar() {
         </ul>
 
         <div className="hidden items-center gap-2 md:flex">
+          <ThemeToggle />
           <a
             href="/resume.pdf"
             download
-            className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-white px-4 py-2 text-sm font-medium text-[color:var(--color-text)] transition-all hover:border-[color:var(--color-text)] hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-bg)] px-4 py-2 text-sm font-medium text-[color:var(--color-text)] transition-all hover:border-[color:var(--color-text)] hover:-translate-y-0.5"
           >
             <Download size={14} /> Resume
           </a>
@@ -94,7 +96,7 @@ export default function Navbar() {
         </div>
 
         <button
-          className="grid h-10 w-10 place-items-center rounded-full border border-[color:var(--color-border)] bg-white md:hidden"
+          className="grid h-10 w-10 place-items-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-bg)] md:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
         >
@@ -109,7 +111,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="border-t border-[color:var(--color-border)] bg-white md:hidden"
+            className="border-t border-[color:var(--color-border)] bg-[color:var(--color-bg)] md:hidden"
           >
             <div className="mx-auto max-w-6xl px-5 py-3">
               {links.map((l) => (
@@ -126,6 +128,7 @@ export default function Navbar() {
                 </button>
               ))}
               <div className="mt-2 flex gap-2">
+                <ThemeToggle />
                 <a
                   href="/resume.pdf"
                   download

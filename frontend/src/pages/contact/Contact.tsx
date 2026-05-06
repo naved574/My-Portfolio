@@ -47,7 +47,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-24 md:py-32">
+    <section id="contact" className="relative py-24 md:py-32 text-black">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-[1fr_1.2fr] md:gap-16">
           <div>
@@ -128,7 +128,7 @@ export default function Contact() {
                   value={form.name}
                   onChange={onChange("name")}
                   error={errors.name}
-                  placeholder="Jane Doe"
+                  placeholder="Enter your name"
                   maxLength={100}
                 />
                 <Field
@@ -138,7 +138,7 @@ export default function Contact() {
                   value={form.email}
                   onChange={onChange("email")}
                   error={errors.email}
-                  placeholder="jane@company.com"
+                  placeholder="Enter your email"
                   maxLength={255}
                 />
                 <div>
@@ -163,7 +163,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={status === "sending"}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[color:var(--color-text)] px-5 py-3 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-black disabled:opacity-60"
+                  className="inline-flex w-full bg-[color:var(--color-text)] items-center justify-center gap-2 rounded-full  px-5 py-3 text-sm font-medium text-[color:var(--sec-color-text)] transition-all hover:-translate-y-0.5  hover:bg-black hover:text-white disabled:opacity-60"
                 >
                   {status === "sending" ? "Sending…" : (<><Send size={14} /> Send message</>)}
                 </button>
