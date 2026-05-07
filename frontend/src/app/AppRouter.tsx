@@ -5,7 +5,7 @@ import {
     Projects,
     Contact,
     NotFound,
-} from '@/pages/Index';
+} from '@/pages';
 import MainLayout from '@/layouts/MainLayout';
 
 const router = createBrowserRouter(
