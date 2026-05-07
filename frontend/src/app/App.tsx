@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Router from "./Router.tsx";
+import AppRouter from "./AppRouter.tsx";
 
 
 const queryClient = new QueryClient();
@@ -12,7 +12,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <Router />
+      <AppRouter />
     </TooltipProvider>
   </QueryClientProvider>
 );

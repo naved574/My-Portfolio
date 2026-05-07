@@ -76,7 +76,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.12, duration: 0.6 }}
-            className="font-display mt-5 text-4xl font-bold leading-[1.05] tracking-tight text-[color:var(--color-text)] md:text-6xl"
+            className="font-display mt-5 text-4xl font-bold leading-[1.05] tracking-tight text-black md:text-6xl"
           >
             
             Hi, I'm <span className="text-primary">Mohmad Naved</span> —<br className="hidden md:block" />{" "}
@@ -91,9 +91,9 @@ export default function Hero() {
             className="mt-5 max-w-xl text-base leading-relaxed text-[color:var(--color-muted)] md:text-lg"
           >
             I build modern, responsive, and user-friendly web experiences. Day to day I work
-            with <b className="text-[color:var(--color-text)] font-semibold">React</b>,{" "}
-            <b className="text-[color:var(--color-text)] font-semibold">Tailwind</b>, and{" "}
-            <b className="text-[color:var(--color-text)] font-semibold">Node.js</b> to ship
+            with <b className="text-black font-semibold">React</b>,{" "}
+            <b className="text-black font-semibold">Tailwind</b>, and{" "}
+            <b className="text-black font-semibold">Node.js</b> to ship
             interfaces that feel fast and calm.
           </motion.p>
 
@@ -105,14 +105,14 @@ export default function Hero() {
           >
             <button
               onClick={() => navigate("/projects")}
-              className="group inline-flex items-center gap-2 rounded-full bg-[color:var(--color-text)] px-5 py-3 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-black"
+              className="group inline-flex items-center gap-2 rounded-full bg-black px-5 py-3 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-gray-900 "
             >
               View Projects
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
             </button>
             <button
               onClick={() => navigate("/contact")}
-              className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-white px-5 py-3 text-sm font-medium text-[color:var(--color-text)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
+              className="inline-flex items-center gap-2 rounded-full border bg-white px-5 py-3 text-sm font-medium text-black transition-all hover:-translate-y-0.5 "
             >
               <Mail size={16} /> Contact Me
             </button>
@@ -172,7 +172,7 @@ export default function Hero() {
               className="aspect-square w-full object-cover"
             />
             <div className="pointer-events-none absolute inset-x-4 bottom-4 flex items-center justify-between rounded-xl border border-white/60 bg-white/80 px-3 py-2 text-xs backdrop-blur">
-              <span className="font-medium text-[color:var(--color-text)]">Mohmad Naved</span>
+              <span className="font-medium text-black">Mohmad Naved</span>
               <span className="text-[color:var(--color-muted)]">Full-Stack Dev</span>
             </div>
           </div>
