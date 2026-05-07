@@ -1,17 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Download, Mail, Github, Linkedin } from "lucide-react";
 import portrait from "@/assets/images/portrait.webp";
 import bgVideo from "@/assets/videos/hero-bg.webm";
 
-const scrollTo = (id: string) => {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const top = el.getBoundingClientRect().top + window.scrollY - 72;
-  window.scrollTo({ top, behavior: "smooth" });
-};
-
 export default function Hero() {
+  const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
   const [isSmall, setIsSmall] = useState(false);
@@ -109,14 +104,14 @@ export default function Hero() {
             className="mt-7 flex flex-wrap items-center gap-3"
           >
             <button
-              onClick={() => scrollTo("projects")}
+              onClick={() => navigate("/projects")}
               className="group inline-flex items-center gap-2 rounded-full bg-[color:var(--color-text)] px-5 py-3 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-black"
             >
               View Projects
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
             </button>
             <button
-              onClick={() => scrollTo("contact")}
+              onClick={() => navigate("/contact")}
               className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-white px-5 py-3 text-sm font-medium text-[color:var(--color-text)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
             >
               <Mail size={16} /> Contact Me

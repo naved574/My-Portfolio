@@ -172,7 +172,7 @@ export default function Projects() {
                             href={p.live}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 rounded-full bg-black px-3.5 py-1.5 text-xs font-medium text-white hover:bg-black"
+                            className="inline-flex items-center gap-1.5 rounded-full bg-[color:var(--color-surface-2)] border px-3.5 py-1.5 text-xs font-medium text-[color:var(--sec-color-text)] hover:bg-[color:var(--color-surface)] hover:text-[color:var(--color-text)]"
                           >
                             <ExternalLink size={13} /> Live
                           </a>
@@ -182,7 +182,7 @@ export default function Projects() {
                             href={p.code}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--color-border)] bg-white px-3.5 py-1.5 text-xs font-medium text-black hover:border-[color:var(--color-text)]"
+                            className="inline-flex items-center gap-1.5 rounded-full border bg-[color:var(--color-surface)] px-3.5 py-1.5 text-xs font-medium text-[color:var(--color-text)] hover:bg-[color:var(--color-surface-2)] hover:text-[color:var(--sec-color-text)]"
                           >
                             <Github size={13} /> Code
                           </a>

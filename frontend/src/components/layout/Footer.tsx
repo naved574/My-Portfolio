@@ -3,12 +3,9 @@ import SkillsMenu from "@/components/layout/SkillsMenu";
 export default function Footer() {
   return (
     <footer className=" border-t border-[color:var(--color-border)] dark:bg-[color:var(--color-text)] text-[color:var(--sec-color-text)] transition-colors duration-700">
-      <div>
-        <SkillsMenu />
-      </div>
       <div className="mx-auto grid grid-cols-2 max-w-6xl items-center justify-between gap-4 md:gap-40 px-5 py-8 text-sm text-center text-[color:var(--color-muted)] md:flex-row md:px-8">
         <div className="flex flex-col md:flex-row justify-center items-center gap-2">
-          <a href="#home">
+          <a href="/">
             <div className="grid place-items-center w-30 rounded-md cursor-pointer">
               <img src={Logo} alt="logo" className="object-contain" />
             </div>

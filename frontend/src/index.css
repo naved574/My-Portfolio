@@ -27,7 +27,7 @@
   --color-muted: #555555;
   --color-bg: #ffffff;
   --color-surface: #f8f9fb;
-  --color-surface-2: #f1f3f7;
+  --color-surface-2: #18181b;
   --color-border: #e5e7eb;
   --radius: 12px;
   color-scheme: light;
@@ -40,7 +40,7 @@
   --color-muted: #a1a1aa;
   --color-bg: #080808;
   --color-surface: #111111;
-  --color-surface-2: #18181b;
+  --color-surface-2: #f1f3f7;
   --color-border: #27272a;
   color-scheme: dark;
 }

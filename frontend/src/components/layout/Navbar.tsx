@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Download } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useActiveSection } from "@/hooks/useActiveSection";
 import Logo from "@/assets/icons/navLogo.svg";
 import ThemeToggle from "@/components/layout/ThemeToggle";
 
 const links = [
-  { id: "home", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "projects", label: "Projects" },
-  { id: "contact", label: "Contact" },
+  { path: "/", label: "Home" },
+  { path: "/about", label: "About" },
+  { path: "/projects", label: "Projects" },
+  { path: "/contact", label: "Contact" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const active = useActiveSection(links.map((l) => l.id));
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -24,12 +25,9 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const go = (id: string) => {
+  const go = (path: string) => {
     setOpen(false);
-    const el = document.getElementById(id);
-    if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - 72;
-    window.scrollTo({ top, behavior: "smooth" });
+    navigate(path);
   };
 
   return (
@@ -41,24 +39,25 @@ export default function Navbar() {
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:px-8">
-        <button
-          onClick={() => go("home")}
+        <Link
+          to="/"
           className="font-display text-lg font-bold tracking-tight"
           aria-label="Home"
+          onClick={() => setOpen(false)}
         >
           <div className="grid place-items-center w-45 rounded-[10px] cursor-pointer">
            <img src={Logo} alt="Logo" className="w-full h-full" />
           </div>
-        </button>
+        </Link>
 
         <ul className="hidden items-center gap-1 md:flex">
           {links.map((l) => {
-            const isActive = active === l.id;
+            const isActive = pathname === l.path;
             return (
-              <li key={l.id}>
+              <li key={l.path}>
                 <button
-                  onClick={() => go(l.id)}
-                  className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  onClick={() => go(l.path)}
+                  className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors cursor-pointer ${
                     isActive
                       ? "text-[color:var(--color-text)]"
                       : "text-[color:var(--color-muted)] hover:text-[color:var(--color-text)]"
@@ -88,8 +87,8 @@ export default function Navbar() {
             <Download size={14} /> Resume
           </a>
           <button
-            onClick={() => go("contact")}
-            className="rounded-full bg-[color:var(--color-text)] px-4 py-2 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-black"
+            onClick={() => go("/contact")}
+            className="rounded-full bg-[color:var(--color-text)] px-4 py-2 text-sm border border-[color:var(--color-border)] font-medium text-[color:var(--sec-color-text)] transition-all hover:-translate-y-0.5 hover:bg-[color:var(--sec-color-text)] hover:text-[color:var(--color-text)] hover:border-[color:var(--color-text)] "
           >
             Hire Me
           </button>
@@ -116,10 +115,10 @@ export default function Navbar() {
             <div className="mx-auto max-w-6xl px-5 py-3">
               {links.map((l) => (
                 <button
-                  key={l.id}
-                  onClick={() => go(l.id)}
+                  key={l.path}
+                  onClick={() => go(l.path)}
                   className={`block w-full rounded-lg px-3 py-3 text-left text-sm font-medium ${
-                    active === l.id
+                    pathname === l.path
                       ? "bg-[color:var(--color-surface)] text-[color:var(--color-text)]"
                       : "text-[color:var(--color-muted)]"
                   }`}
@@ -137,8 +136,8 @@ export default function Navbar() {
                   <Download size={14} /> Resume
                 </a>
                 <button
-                  onClick={() => go("contact")}
-                  className="flex-1 rounded-full bg-[color:var(--color-text)] px-4 py-2.5 text-sm font-medium text-white"
+                  onClick={() => go("/contact")}
+                  className="flex-1 rounded-full bg-[color:var(--color-surface)] px-4 py-2.5 text-sm font-medium text-white"
                 >
                   Hire Me
                 </button>
