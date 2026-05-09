@@ -87,33 +87,6 @@ body {
   box-shadow: var(--shadow-lift);
 }
 
-/* Embla carousel — use transform-only animations */
-.embla {
-  overflow: hidden;
-}
-.embla__container {
-  display: flex;
-  touch-action: pan-y pinch-zoom;
-  will-change: transform;
-}
-.embla__slide {
-  flex: 0 0 80%;
-  min-width: 0;
-  padding: 0 12px;
-  transition: transform 500ms ease-out, opacity 500ms ease-out;
-  will-change: transform, opacity;
-}
-@media (min-width: 768px) {
-  .embla__slide {
-    flex-basis: 55%;
-  }
-}
-@media (min-width: 1100px) {
-  .embla__slide {
-    flex-basis: 45%;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

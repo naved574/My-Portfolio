@@ -10,181 +10,255 @@ import {
   ExternalLink,
   Github,
 } from "lucide-react";
+
 import SectionHeading from "@/components/common/SectionHeading";
-// import { projects } from "@/data/projectsData";
 import { useProjects } from "@/hooks/useProjects";
 
-const TWEEN_FACTOR = 1.1;
+const TWEEN_FACTOR = 0.18;
 
 export default function Projects() {
   const autoplay = useRef(
-    Autoplay({ delay: 8000, stopOnInteraction: false, stopOnMouseEnter: true })
+    Autoplay({
+      delay: 6000,
+      stopOnInteraction: true,
+      stopOnMouseEnter: true,
+    })
   );
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       loop: true,
       align: "center",
-      containScroll: false,
-      duration: 30, // ~500ms at 60fps
+
+      // smoother
       dragFree: false,
+      skipSnaps: false,
+      containScroll: "trimSnaps",
+
+      // smoother touch
+      duration: 25,
+
+      // half screen cards
+      slidesToScroll: 1,
     },
     [autoplay.current]
   );
 
   const [selected, setSelected] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+
   const tweenNodes = useRef<HTMLElement[]>([]);
 
+  // Cache nodes once
   const setTweenNodes = useCallback(() => {
     if (!emblaApi) return;
-    tweenNodes.current = emblaApi.slideNodes().map(
-      (slide) => slide.querySelector(".embla__tween") as HTMLElement
-    );
+
+    tweenNodes.current = emblaApi.slideNodes().map((slide) => {
+      return slide.querySelector(".embla__tween") as HTMLElement;
+    });
   }, [emblaApi]);
 
+  // optimized animation
   const tweenScale = useCallback(() => {
     if (!emblaApi) return;
-    const engine = emblaApi.internalEngine();
+
     const scrollProgress = emblaApi.scrollProgress();
-    const slidesInView = emblaApi.slidesInView();
-    const isScrollEvent = engine.options.loop ? true : false;
 
-    emblaApi.scrollSnapList().forEach((snap, snapIndex) => {
-      let diffToTarget = snap - scrollProgress;
+    emblaApi.scrollSnapList().forEach((snap, index) => {
+      const diff = Math.abs(snap - scrollProgress);
 
-      if (isScrollEvent) {
-        engine.slideLooper.loopPoints.forEach((loopItem) => {
-          const target = loopItem.target();
-          if (snapIndex === loopItem.index && target !== 0) {
-            const sign = Math.sign(target);
-            if (sign === -1) diffToTarget = snap - (1 + scrollProgress);
-            if (sign === 1) diffToTarget = snap + (1 - scrollProgress);
-          }
-        });
-      }
+      const scale = 1 - Math.min(diff * TWEEN_FACTOR, 0.12);
 
-      const tweenValue = 1 - Math.abs(diffToTarget * TWEEN_FACTOR);
-      const clamped = Math.max(0, Math.min(1, tweenValue));
-      const scale = 0.85 + clamped * 0.15;
-      const opacity = 0.6 + clamped * 0.4;
-      const node = tweenNodes.current[snapIndex];
-      if (node) {
-        node.style.transform = `scale(${scale.toFixed(3)})`;
-        node.style.opacity = opacity.toFixed(3);
-      }
-      // Keep unused var referenced
-      void slidesInView;
+      const opacity = 1 - Math.min(diff * 0.5, 0.45);
+
+      const node = tweenNodes.current[index];
+
+      if (!node) return;
+
+      node.style.transform = `scale(${scale})`;
+      node.style.opacity = `${opacity}`;
     });
   }, [emblaApi]);
 
   useEffect(() => {
     if (!emblaApi) return;
-    setScrollSnaps(emblaApi.scrollSnapList());
+
     setTweenNodes();
-    tweenScale();
-    const onSelect = () => setSelected(emblaApi.selectedScrollSnap());
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", () => {
-      setScrollSnaps(emblaApi.scrollSnapList());
-      setTweenNodes();
-      tweenScale();
-    });
+
+    setScrollSnaps(emblaApi.scrollSnapList());
+
+    const onSelect = () => {
+      setSelected(emblaApi.selectedScrollSnap());
+    };
+
     emblaApi.on("scroll", tweenScale);
-    emblaApi.on("slideFocus", tweenScale);
+    emblaApi.on("select", onSelect);
+
+    tweenScale();
     onSelect();
+
     return () => {
+      emblaApi.off("scroll", tweenScale);
       emblaApi.off("select", onSelect);
     };
-  }, [emblaApi, setTweenNodes, tweenScale]);
+  }, [emblaApi, tweenScale, setTweenNodes]);
 
   const toggle = () => {
-    const ap = autoplay.current;
-    if (!ap) return;
     if (isPlaying) {
-      ap.stop();
-      setIsPlaying(false);
+      autoplay.current.stop();
     } else {
-      ap.play();
-      setIsPlaying(true);
+      autoplay.current.play();
     }
+
+    setIsPlaying(!isPlaying);
   };
 
   const projects = useProjects();
-  const scrollPrev = () => emblaApi?.scrollPrev();
-  const scrollNext = () => emblaApi?.scrollNext();
-  const scrollTo = (i: number) => emblaApi?.scrollTo(i);
 
   return (
-    <section id="projects" className="relative dark:bg-[color:var(--color-text)] dark:text-[color:var(--color-text)] py-24 md:py-32">
+    <section
+      id="projects"
+      className="relative py-24 md:py-32 overflow-hidden"
+    >
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <SectionHeading
           eyebrow="Selected Work"
           title="Projects I've built and shipped."
-          description="A rotating look at recent work. Drag, swipe, or let it play — it loops seamlessly every 8 seconds."
+          description="Smooth and optimized project showcase carousel."
         />
       </div>
 
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.6 }}
-        className="mt-12"
+        transition={{ duration: 0.5 }}
+        className="mt-14"
       >
-        <div className="embla" ref={emblaRef}>
-          <div className="embla__container">
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex">
             {projects.map((p) => (
-              <div key={p.id} className="embla__slide">
-                <div className="embla__tween">
-                  <article className="group relative overflow-hidden rounded-[20px] border border-[color:var(--color-border)] bg-white shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lift">
+              <div
+                key={p.id}
+                className="
+                  min-w-0
+                  flex-[0_0_50%]
+                  sm:flex-[0_0_50%]
+                  lg:flex-[0_0_35%]
+                  px-3
+                "
+              >
+                <div className="embla__tween will-change-transform">
+                  <article
+                    className="
+                      group
+                      overflow-hidden
+                      rounded-3xl
+                      border
+                      border-[color:var(--color-border)]
+                      bg-[color:var(--color-surface)]
+                      shadow-soft
+                      transition-all
+                      duration-300
+                    "
+                  >
                     <div className="relative aspect-[16/10] overflow-hidden">
                       <img
                         src={p.image}
                         alt={p.title}
                         loading="lazy"
-                        decoding="async"
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        className="
+                          h-full
+                          w-full
+                          object-cover
+                          transition-transform
+                          duration-700
+                          group-hover:scale-105
+                        "
                       />
-                      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/30 to-transparent" />
                     </div>
+
                     <div className="p-6">
-                      <div className="flex flex-wrap gap-1.5">
+                      <div className="flex flex-wrap gap-2">
                         {p.stack.map((s) => (
                           <span
                             key={s}
-                            className="rounded-full border border-[color:var(--color-border)] bg-black px-2.5 py-0.5 text-[11px] font-medium text-white"
+                            className="
+                              rounded-full
+                              border
+                              px-3
+                              py-1
+                              text-[11px]
+                            "
                           >
                             {s}
                           </span>
                         ))}
                       </div>
-                      <h3 className="font-display mt-3 text-2xl font-bold text-black">
+
+                      <h3
+                        className="
+                          mt-4
+                          text-2xl
+                          font-bold
+                          text-[color:var(--color-text)]
+                        "
+                      >
                         {p.title}
                       </h3>
-                      <p className="mt-2 text-sm leading-relaxed text-[color:var(--color-muted)]">
+
+                      <p
+                        className="
+                          mt-3
+                          text-sm
+                          leading-relaxed
+                          text-[color:var(--color-muted)]
+                        "
+                      >
                         {p.description}
                       </p>
-                      <div className="mt-5 flex items-center gap-2">
+
+                      <div className="mt-6 flex items-center gap-3">
                         {p.live && (
                           <a
                             href={p.live}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 rounded-full bg-[color:var(--color-surface-2)] border px-3.5 py-1.5 text-xs font-medium text-[color:var(--sec-color-text)] hover:bg-[color:var(--color-surface)] hover:text-[color:var(--color-text)]"
+                            className="
+                              inline-flex
+                              items-center
+                              gap-2
+                              rounded-full
+                              border
+                              px-4
+                              py-2
+                              text-sm
+                            "
                           >
-                            <ExternalLink size={13} /> Live
+                            <ExternalLink size={14} />
+                            Live
                           </a>
                         )}
+
                         {p.code && (
                           <a
                             href={p.code}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 rounded-full border bg-[color:var(--color-surface)] px-3.5 py-1.5 text-xs font-medium text-[color:var(--color-text)] hover:bg-[color:var(--color-surface-2)] hover:text-[color:var(--sec-color-text)]"
+                            className="
+                              inline-flex
+                              items-center
+                              gap-2
+                              rounded-full
+                              border
+                              px-4
+                              py-2
+                              text-sm
+                            "
                           >
-                            <Github size={13} /> Code
+                            <Github size={14} />
+                            Code
                           </a>
                         )}
                       </div>
@@ -197,40 +271,66 @@ export default function Projects() {
         </div>
 
         {/* Controls */}
-        <div className="mx-auto mt-8 flex max-w-6xl items-center justify-between gap-4 px-5 md:px-8">
-          <div className="flex items-center bg-[color:var(--color-surface)] gap-2">
+        <div className="mx-auto mt-10 flex max-w-6xl items-center justify-between px-5">
+          <div className="flex items-center gap-3">
             <button
-              onClick={scrollPrev}
-              aria-label="Previous project"
-              className="grid h-10 w-10 place-items-center rounded-full border border-[color:var(--color-border)]  transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
+              onClick={() => emblaApi?.scrollPrev()}
+              className="
+                grid
+                h-11
+                w-11
+                place-items-center
+                rounded-full
+                border
+              "
             >
               <ChevronLeft size={18} />
             </button>
+
             <button
-              onClick={scrollNext}
-              aria-label="Next project"
-              className="grid h-10 w-10 place-items-center rounded-full border border-[color:var(--color-border)]  transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
+              onClick={() => emblaApi?.scrollNext()}
+              className="
+                grid
+                h-11
+                w-11
+                place-items-center
+                rounded-full
+                border
+              "
             >
               <ChevronRight size={18} />
             </button>
           </div>
 
-          <div className="hidden items-center gap-1.5 md:flex">
+          <div className="hidden md:flex items-center gap-2">
             {scrollSnaps.map((_, i) => (
               <button
                 key={i}
-                onClick={() => scrollTo(i)}
-                aria-label={`Go to project ${i + 1}`}
-                className={`h-1.5 rounded-full transition-all ${i === selected ? "w-6 bg-[color:var(--color-text)]" : "w-1.5 bg-[color:var(--color-border)]"
-                  }`}
+                onClick={() => emblaApi?.scrollTo(i)}
+                className={`
+                  h-2 rounded-full transition-all duration-300
+                  ${
+                    i === selected
+                      ? "w-8 bg-black dark:bg-white"
+                      : "w-2 bg-gray-400"
+                  }
+                `}
               />
             ))}
           </div>
 
           <button
             onClick={toggle}
-            aria-label={isPlaying ? "Pause autoplay" : "Play autoplay"}
-            className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-4 py-2 text-sm font-medium text-[color:var(--color-text)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
+            className="
+              inline-flex
+              items-center
+              gap-2
+              rounded-full
+              border
+              px-4
+              py-2
+              text-sm
+            "
           >
             {isPlaying ? <Pause size={14} /> : <Play size={14} />}
             {isPlaying ? "Pause" : "Play"}

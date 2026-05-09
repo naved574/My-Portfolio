@@ -9,22 +9,6 @@ export type Project = {
   accent: string;
 };
 
-// Placeholder gradient "cover images" via inline SVG data URIs — no external dependencies.
-const cover = (from: string, to: string, label: string) =>
-  `data:image/svg+xml;utf8,${encodeURIComponent(
-    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'>
-      <defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
-        <stop offset='0%' stop-color='${from}'/><stop offset='100%' stop-color='${to}'/>
-      </linearGradient></defs>
-      <rect width='800' height='500' fill='url(#g)'/>
-      <g font-family='Inter, sans-serif' fill='white' opacity='0.95'>
-        <text x='48' y='440' font-size='42' font-weight='700' letter-spacing='-1'>${label}</text>
-      </g>
-      <g fill='white' opacity='0.12'>
-        <circle cx='680' cy='120' r='120'/><circle cx='560' cy='80' r='60'/>
-      </g>
-    </svg>`
-  )}`;
 
 export const projectsData: Project[] = [
   {
@@ -33,7 +17,8 @@ export const projectsData: Project[] = [
     description:
       "An analytics dashboard with real-time charts, role-based access, and a focus on clarity for non-technical teams.",
     stack: ["React", "TypeScript", "Tailwind", "Node.js"],
-    image: cover("#4F9CF9", "#6366f1", "Nimbus"),
+    // image: cover("#4F9CF9", "#6366f1", "Nimbus"),
+    image: "https://images.unsplash.com/photo-1634084462412-b54873c0a56d?q=80&w=1460&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     live: "#",
     code: "#",
     accent: "#4F9CF9",
@@ -44,7 +29,8 @@ export const projectsData: Project[] = [
     description:
       "Headless storefront with a motion-first product page, Stripe checkout, and a CMS-powered catalogue.",
     stack: ["Next.js", "Stripe", "Sanity"],
-    image: cover("#10b981", "#06b6d4", "Orbit"),
+    // image: cover("#10b981", "#06b6d4", "Orbit"),
+    image: "https://images.unsplash.com/photo-1642132652860-471b4228023e?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     live: "#",
     code: "#",
     accent: "#10b981",
@@ -55,7 +41,7 @@ export const projectsData: Project[] = [
     description:
       "A collaborative color-system builder. Drag tokens, preview components live, and export for Tailwind or CSS.",
     stack: ["React", "Zustand", "Framer Motion"],
-    image: cover("#f59e0b", "#ef4444", "Palette"),
+    image: "https://media.istockphoto.com/id/1053578536/photo/travel-resort-webstore-web-site-template-mockup-isolated.jpg?s=612x612&w=0&k=20&c=BV7ioMXefI4D3L-jQowB_OyzYEsgQjsLgJD7mMBhATI=",
     live: "#",
     code: "#",
     accent: "#f59e0b",
@@ -66,7 +52,7 @@ export const projectsData: Project[] = [
     description:
       "A realtime chat app with typing indicators, threaded replies, and end-to-end client-side encryption.",
     stack: ["React", "WebSocket", "Node.js"],
-    image: cover("#8b5cf6", "#ec4899", "Echo"),
+    image: "https://media.istockphoto.com/id/493507168/photo/online-shopping-e-business-browsing-internet-concept.jpg?s=612x612&w=0&k=20&c=GGGQmAMRDjd7b0RE5RCmt1RgVEeG-dgBc_ahZlTF1a0=",
     live: "#",
     code: "#",
     accent: "#8b5cf6",
@@ -77,7 +63,7 @@ export const projectsData: Project[] = [
     description:
       "A route-planning app for hikers — offline-ready maps, elevation graphs, and shareable trip notes.",
     stack: ["React", "Mapbox", "PWA"],
-    image: cover("#14b8a6", "#0ea5e9", "Trailhead"),
+    image: "https://media.istockphoto.com/id/1255403703/vector/people-with-purchases-and-devices-clothing-store-online-shopping-mobile-marketing-e-commerce.jpg?s=612x612&w=0&k=20&c=wifByuFaeHurUbltmxLSWuwU7G0T-NuBqSU9qTKeax4=",
     live: "#",
     code: "#",
     accent: "#14b8a6",
@@ -88,7 +74,7 @@ export const projectsData: Project[] = [
     description:
       "A lightweight, markdown-native CMS with a block editor, versioning, and a zero-config Git sync.",
     stack: ["React", "Node.js", "SQLite"],
-    image: cover("#111827", "#374151", "Quill"),
+    image: "https://media.istockphoto.com/id/1083579602/vector/%C3%B0%C3%B1%C3%B0%C3%B0%C3%B0%C3%B0%C3%B1%C3%B0%C2%B5-rgb.jpg?s=612x612&w=0&k=20&c=2fnaF5su4Vu-6CoxTFixKY8z1ffhExFdiojDWmB5nPA=",
     live: "#",
     code: "#",
     accent: "#111827",
