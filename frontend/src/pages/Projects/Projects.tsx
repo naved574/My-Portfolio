@@ -26,23 +26,28 @@ export default function Projects() {
   );
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    {
-      loop: true,
-      align: "center",
+  {
+    loop: true,
 
-      // smoother
-      dragFree: false,
-      skipSnaps: false,
-      containScroll: "trimSnaps",
+    // smoother center
+    align: "center",
 
-      // smoother touch
-      duration: 25,
+    // important
+    dragFree: true,
 
-      // half screen cards
-      slidesToScroll: 1,
-    },
-    [autoplay.current]
-  );
+    // smoother physics
+    duration: 40,
+
+    // better touch
+    skipSnaps: true,
+
+    containScroll: false,
+
+    // smoother momentum
+    watchDrag: true,
+  },
+  [autoplay.current]
+);
 
   const [selected, setSelected] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
