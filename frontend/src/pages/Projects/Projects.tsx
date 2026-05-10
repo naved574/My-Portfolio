@@ -148,7 +148,7 @@ export default function Projects() {
                 key={p.id}
                 className="
                   min-w-0
-                  flex-[0_0_50%]
+                  flex-[0_0_80%]
                   sm:flex-[0_0_50%]
                   lg:flex-[0_0_35%]
                   px-3
