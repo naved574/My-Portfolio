@@ -28,22 +28,11 @@ export default function Projects() {
   const [emblaRef, emblaApi] = useEmblaCarousel(
   {
     loop: true,
-
-    // smoother center
     align: "center",
-
-    // important
     dragFree: true,
-
-    // smoother physics
     duration: 40,
-
-    // better touch
     skipSnaps: true,
-
     containScroll: false,
-
-    // smoother momentum
     watchDrag: true,
   },
   [autoplay.current]

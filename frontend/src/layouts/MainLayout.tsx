@@ -17,7 +17,7 @@ const MainLayout = () => {
       <ScrollProgress />
       <Navbar />
       <main>
-            <Outlet />
+        <Outlet />
       </main>
       <Footer />
       <BackToTop />
