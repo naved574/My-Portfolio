@@ -5,7 +5,6 @@ import { CheckCircle2, Mail, Send, Github, Linkedin } from "lucide-react";
 import SectionHeading from "@/components/common/SectionHeading";
 import { contactSchema, type ContactForm } from "@/utils/validators";
 
-// const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000/api";
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Contact() {
@@ -37,7 +36,7 @@ export default function Contact() {
     setStatus("sending");
     try {
       await axios.post(`${API_URL}/contact`, parsed.data);
-      await new Promise((r) => setTimeout(r, 600));
+      await new Promise((r) => setTimeout(r, 100));
       setStatus("sent");
       setForm({ name: "", email: "", message: "" });
     } catch {

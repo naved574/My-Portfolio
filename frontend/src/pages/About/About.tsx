@@ -23,9 +23,9 @@ const skills = [
 ];
 
 const timeline = [
-  { year: "2022", title: "Started coding seriously", desc: "Self-taught React and built my first landing pages." },
-  { year: "2023", title: "First real project", desc: "Shipped a dashboard for a small studio, learning Node & Postgres." },
-  { year: "2024", title: "Freelance & open source", desc: "Client work across e-commerce and tools; contributed to OSS UI kits." },
+  { year: "2023", title: "Started coding seriously", desc: "Self-taught React and built my first landing pages." },
+  { year: "2024", title: "First real project", desc: "Shipped a dashboard for a small studio, learning Node & Postgres." },
+  { year: "2025", title: "Freelance & open source", desc: "Client work across e-commerce and tools; contributed to OSS UI kits." },
   { year: "2025", title: "Full-stack focus", desc: "Building motion-rich, production-grade apps end to end." },
 ];
 
