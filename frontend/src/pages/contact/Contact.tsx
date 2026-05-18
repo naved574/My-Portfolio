@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { CheckCircle2, Mail, Send, Github, Linkedin } from "lucide-react";
@@ -6,12 +6,20 @@ import SectionHeading from "@/components/common/SectionHeading";
 import { contactSchema, type ContactForm } from "@/utils/validators";
 
 const API_URL = import.meta.env.VITE_API_URL;
+const CONTACT_SEND_TIMEOUT_MS = 7000;
 
 export default function Contact() {
   const [form, setForm] = useState<ContactForm>({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof ContactForm, string>>>({});
-  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "accepted">("idle");
   const [submitError, setSubmitError] = useState("");
+  const activeControllerRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    return () => {
+      activeControllerRef.current?.abort();
+    };
+  }, []);
 
   const onChange = (k: keyof ContactForm) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -33,15 +41,46 @@ export default function Contact() {
       setErrors(fieldErrors);
       return;
     }
+
     setStatus("sending");
+    activeControllerRef.current?.abort();
+    const controller = new AbortController();
+    activeControllerRef.current = controller;
+
     try {
-      await axios.post(`${API_URL}/contact`, parsed.data);
-      await new Promise((r) => setTimeout(r, 100));
-      setStatus("sent");
+      const response = await axios.post(`${API_URL}/contact`, parsed.data, {
+        signal: controller.signal,
+        timeout: CONTACT_SEND_TIMEOUT_MS,
+      });
+
+      if (response.status !== 202) {
+        throw new Error("Unexpected response status.");
+      }
+
+      if (activeControllerRef.current !== controller) return;
+      setStatus("accepted");
       setForm({ name: "", email: "", message: "" });
-    } catch {
+    } catch (error) {
+      if (activeControllerRef.current !== controller) return;
+
       setStatus("idle");
-      setSubmitError("Message could not be sent. Please try again.");
+      if (axios.isAxiosError(error)) {
+        if (error.code === "ECONNABORTED") {
+          setSubmitError("Request timed out. Please try again.");
+        } else if (error.response?.status === 503) {
+          setSubmitError("Message service is busy. Please retry in a few moments.");
+        } else if (error.code === "ERR_CANCELED") {
+          setSubmitError("Message send was interrupted. Please submit again.");
+        } else {
+          setSubmitError("Message could not be sent. Please try again.");
+        }
+      } else {
+        setSubmitError("Message could not be sent. Please try again.");
+      }
+    } finally {
+      if (activeControllerRef.current === controller) {
+        activeControllerRef.current = null;
+      }
     }
   };
 
@@ -53,7 +92,7 @@ export default function Contact() {
             <SectionHeading
               eyebrow="Contact"
               title="Let's build something good together."
-              description="Have a project, a role, or just want to say hi? Drop a message — I usually reply within a day."
+              description="Have a project, a role, or just want to say hi? Drop a message - I usually reply within a day."
             />
             <div className="mt-8 space-y-3 text-sm">
               <a
@@ -98,7 +137,7 @@ export default function Contact() {
             className="rounded-[20px] border border-[color:var(--color-border)] bg-white p-6 shadow-soft md:p-8"
             noValidate
           >
-            {status === "sent" ? (
+            {status === "accepted" ? (
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -107,9 +146,9 @@ export default function Contact() {
                 <div className="grid h-14 w-14 place-items-center rounded-full bg-primary/10 text-primary">
                   <CheckCircle2 size={28} />
                 </div>
-                <h3 className="font-display text-2xl font-bold">Message sent</h3>
+                <h3 className="font-display text-2xl font-bold">Message accepted</h3>
                 <p className="max-w-sm text-sm text-[color:var(--color-muted)]">
-                  Thanks for reaching out — I'll get back to you soon.
+                  Thanks for reaching out - your message is in the queue and I will get back to you soon.
                 </p>
                 <button
                   type="button"
@@ -129,6 +168,7 @@ export default function Contact() {
                   error={errors.name}
                   placeholder="Enter your name"
                   maxLength={100}
+                  autoComplete="name"
                 />
                 <Field
                   label="Email"
@@ -139,6 +179,7 @@ export default function Contact() {
                   error={errors.email}
                   placeholder="Enter your email"
                   maxLength={255}
+                  autoComplete="email"
                 />
                 <div>
                   <label htmlFor="message" className="mb-1.5 block text-xs font-medium text-[color:var(--color-muted)]">
@@ -150,7 +191,7 @@ export default function Contact() {
                     maxLength={1000}
                     value={form.message}
                     onChange={onChange("message")}
-                    placeholder="Tell me a bit about the project or role…"
+                    placeholder="Tell me a bit about the project or role..."
                     className={`w-full resize-none rounded-[12px] border bg-white px-3.5 py-3 text-sm outline-none transition-all focus:border-[color:var(--color-text)] focus:ring-2 focus:ring-primary/20 ${
                       errors.message ? "border-red-400" : "border-[color:var(--color-border)]"
                     }`}
@@ -164,7 +205,7 @@ export default function Contact() {
                   disabled={status === "sending"}
                   className="inline-flex w-full bg-[color:var(--color-text)] items-center justify-center gap-2 rounded-full  px-5 py-3 text-sm font-medium text-[color:var(--sec-color-text)] transition-all hover:-translate-y-0.5  hover:bg-black hover:text-white disabled:opacity-60"
                 >
-                  {status === "sending" ? "Sending…" : (<><Send size={14} /> Send message</>)}
+                  {status === "sending" ? "Sending..." : (<><Send size={14} /> Send message</>)}
                 </button>
                 {submitError && (
                   <p className="text-center text-xs text-red-500">{submitError}</p>
@@ -187,9 +228,10 @@ type FieldProps = {
   type?: string;
   placeholder?: string;
   maxLength?: number;
+  autoComplete?: string;
 };
 
-function Field({ label, name, value, onChange, error, type = "text", placeholder, maxLength }: FieldProps) {
+function Field({ label, name, value, onChange, error, type = "text", placeholder, maxLength, autoComplete }: FieldProps) {
   return (
     <div>
       <label htmlFor={name} className="mb-1.5 block text-xs font-medium text-[color:var(--color-muted)]">
@@ -203,6 +245,7 @@ function Field({ label, name, value, onChange, error, type = "text", placeholder
         onChange={onChange}
         placeholder={placeholder}
         maxLength={maxLength}
+        autoComplete={autoComplete}
         className={`w-full rounded-[12px] border bg-white px-3.5 py-2.5 text-sm outline-none transition-all focus:border-[color:var(--color-text)] focus:ring-2 focus:ring-primary/20 ${
           error ? "border-red-400" : "border-[color:var(--color-border)]"
         }`}

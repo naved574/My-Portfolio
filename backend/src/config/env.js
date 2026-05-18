@@ -18,4 +18,8 @@ export const env = {
   CLIENT_URL: process.env.CLIENT_URL || "http://localhost:5173",
   ADMIN_EMAIL: process.env.ADMIN_EMAIL || "",
   ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || "",
+  CONTACT_QUEUE_MAX_SIZE: Number(process.env.CONTACT_QUEUE_MAX_SIZE || 200),
+  CONTACT_QUEUE_MAX_RETRIES: Number(process.env.CONTACT_QUEUE_MAX_RETRIES || 3),
+  CONTACT_QUEUE_BASE_DELAY_MS: Number(process.env.CONTACT_QUEUE_BASE_DELAY_MS || 500),
+  CONTACT_QUEUE_CONCURRENCY: Number(process.env.CONTACT_QUEUE_CONCURRENCY || 1),
 };

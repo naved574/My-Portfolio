@@ -1,17 +1,25 @@
 import { ContactMessage } from "../models/ContactMessage.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError, sendSuccess } from "../utils/response.js";
+import { enqueueContactMessage } from "../services/contactQueue.service.js";
 
 export const createContactMessage = asyncHandler(async (req, res) => {
-  const contactMessage = await ContactMessage.create(req.body);
+  const requestId = enqueueContactMessage(req.body);
+
+  if (!requestId) {
+    throw new ApiError(
+      503,
+      "Message queue is busy right now. Please retry in a few moments."
+    );
+  }
 
   return sendSuccess(
     res,
     {
-      message: "Message received successfully.",
-      contactMessage,
+      requestId,
+      message: "Message queued successfully.",
     },
-    201
+    202
   );
 });
 
