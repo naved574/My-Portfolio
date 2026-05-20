@@ -12,21 +12,68 @@ import {
 } from "lucide-react";
 
 const skills = [
-  { icon: Code2, label: "React & TypeScript", desc: "Component architecture, hooks, state patterns." },
-  { icon: Palette, label: "Tailwind CSS", desc: "Design-token-first UI, responsive layouts." },
-  { icon: Server, label: "Node.js & REST", desc: "APIs, auth, realtime with WebSockets." },
-  { icon: Database, label: "Databases", desc: "PostgreSQL, SQLite, schema design." },
-  { icon: Sparkles, label: "Framer Motion", desc: "Subtle, performant interface animation." },
-  { icon: GitBranch, label: "Git & CI", desc: "Clean branches, fast, predictable pipelines." },
-  { icon: Layers, label: "Design Systems", desc: "Reusable primitives, accessible by default." },
-  { icon: Workflow, label: "Product Thinking", desc: "Shipping for real users, not just specs." },
+  { 
+    icon: Code2, 
+    label: "React & TypeScript", 
+    desc: "Component architecture, hooks, state patterns." 
+  },
+  { 
+    icon: Palette, 
+    label: "Tailwind CSS", 
+    desc: "Design-token-first UI, responsive layouts." 
+  },
+  { 
+    icon: Server, 
+    label: "Node.js & REST", 
+    desc: "APIs, auth, realtime with WebSockets." 
+  },
+  { 
+    icon: Database, 
+    label: "Databases", 
+    desc: "PostgreSQL, SQLite, schema design." 
+  },
+  { icon: Sparkles, 
+    label: "Framer Motion", 
+    desc: "Subtle, performant interface animation." 
+  },
+  { 
+    icon: GitBranch, 
+    label: "Git & CI", 
+    desc: "Clean branches, fast, predictable pipelines." 
+  },
+  { 
+    icon: Layers, 
+    label: "Design Systems", 
+    desc: "Reusable primitives, accessible by default." 
+  },
+  { 
+    icon: Workflow, 
+    label: "Product Thinking", 
+    desc: "Shipping for real users, not just specs." 
+  },
 ];
 
 const timeline = [
-  { year: "2023", title: "Started coding seriously", desc: "Self-taught React and built my first landing pages." },
-  { year: "2024", title: "First real project", desc: "Shipped a dashboard for a small studio, learning Node & Postgres." },
-  { year: "2025", title: "Freelance & open source", desc: "Client work across e-commerce and tools; contributed to OSS UI kits." },
-  { year: "2025", title: "Full-stack focus", desc: "Building motion-rich, production-grade apps end to end." },
+  { 
+    year: "2023", 
+    title: "Started coding seriously", 
+    desc: "Self-taught React and built my first landing pages." 
+  },
+  { 
+    year: "2024", 
+    title: "First real project", 
+    desc: "Shipped a dashboard for a small studio, learning Node & Postgres." 
+  },
+  { 
+    year: "2025", 
+    title: "Freelance & open source", 
+    desc: "Client work across e-commerce and tools; contributed to OSS UI kits." 
+  },
+  { 
+    year: "2025", 
+    title: "Full-stack focus", 
+    desc: "Building motion-rich, production-grade apps end to end." 
+  },
 ];
 
 export default function About() {
