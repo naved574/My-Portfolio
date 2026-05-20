@@ -8,20 +8,80 @@ const projectSchema = new mongoose.Schema(
       required: true,
       maxlength: 120,
     },
+    slug: {
+      type: String,
+      trim: true,
+      required: true,
+      lowercase: true,
+      unique: true,
+      maxlength: 160,
+    },
+    bio: {
+      type: String,
+      trim: true,
+      default: "",
+      maxlength: 240,
+    },
+    overview: {
+      type: String,
+      trim: true,
+      default: "",
+      maxlength: 1200,
+    },
+    purpose: {
+      type: String,
+      trim: true,
+      default: "",
+      maxlength: 1200,
+    },
+    work: {
+      type: String,
+      trim: true,
+      default: "",
+      maxlength: 1200,
+    },
     description: {
       type: String,
       trim: true,
       required: true,
-      maxlength: 1000,
+      maxlength: 3000,
+    },
+    features: {
+      type: [String],
+      default: [],
+      validate: {
+        validator: (arr) => arr.length <= 20,
+        message: "Features must contain no more than 20 items.",
+      },
+    },
+    challenges: {
+      type: [String],
+      default: [],
+      validate: {
+        validator: (arr) => arr.length <= 20,
+        message: "Challenges must contain no more than 20 items.",
+      },
     },
     stack: {
       type: [String],
       default: [],
+      validate: {
+        validator: (arr) => arr.length <= 30,
+        message: "Stack must contain no more than 30 items.",
+      },
     },
     image: {
       type: String,
       trim: true,
       required: true,
+    },
+    gallery: {
+      type: [String],
+      default: [],
+      validate: {
+        validator: (arr) => arr.length <= 8,
+        message: "Gallery must contain no more than 8 items.",
+      },
     },
     live: {
       type: String,
@@ -54,7 +114,9 @@ const projectSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-projectSchema.index({ isPublished: 1, sortOrder: 1, createdAt: -1 });
+projectSchema.index({ slug: 1 }, { unique: true });
+projectSchema.index({ isPublished: 1, featured: -1, sortOrder: 1, createdAt: -1 });
+projectSchema.index({ createdAt: -1 });
 
 projectSchema.set("toJSON", {
   virtuals: true,

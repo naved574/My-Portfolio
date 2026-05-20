@@ -1,5 +1,8 @@
 export { default as Home } from "./home/Home.tsx";
 export { default as About } from "./about/About.tsx";
 export { default as Projects } from "./projects/Projects.tsx";
+export { default as ProjectDetail } from "./projects/ProjectDetail.tsx";
+export { default as AdminProjects } from "./projects/AdminProjects.tsx";
+export { default as AdminLogin } from "./projects/AdminLogin.tsx";
 export { default as Contact } from "./contact/Contact.tsx";
 export { default as NotFound } from "./NotFound";

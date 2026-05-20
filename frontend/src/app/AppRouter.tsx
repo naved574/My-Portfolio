@@ -4,6 +4,9 @@ import {
   Home,
   About,
   Projects,
+  ProjectDetail,
+  AdminProjects,
+  AdminLogin,
   Contact,
   NotFound,
 } from "@/pages";
@@ -14,6 +17,9 @@ const router = createBrowserRouter(
             <Route index element={<Home />} />
             <Route path='about' element={<About />} />
             <Route path='projects' element={<Projects />} />
+            <Route path='projects/:slug' element={<ProjectDetail />} />
+            <Route path='admin/login' element={<AdminLogin />} />
+            <Route path='admin/projects' element={<AdminProjects />} />
             <Route path='contact' element={<Contact />} />
             <Route path='*' element={<NotFound />} />
         </Route>

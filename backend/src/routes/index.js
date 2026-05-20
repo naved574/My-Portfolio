@@ -6,6 +6,7 @@ import projectRoutes from "./project.routes.js";
 import {
   createProject,
   deleteProject,
+  getAdminProjects,
   updateProject,
 } from "../controllers/project.controller.js";
 import {
@@ -46,6 +47,7 @@ router.post(
   validate(createProjectValidator),
   createProject
 );
+router.get("/admin/projects", ...adminOnly, getAdminProjects);
 router.patch(
   "/admin/projects/:id",
   ...adminOnly,
