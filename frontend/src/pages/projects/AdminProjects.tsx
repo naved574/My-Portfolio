@@ -263,7 +263,9 @@ export default function AdminProjects() {
             {uploadingMain && <span className="text-sm">Uploading...</span>}
           </div>
           {form.image && (
-            <img src={form.image} alt="Main preview" className="mt-4 h-40 w-64 rounded-lg border object-cover" />
+            <img src={form.image} 
+            alt="Main preview" 
+            className="mt-4 h-40 w-64 rounded-lg border object-cover" />
           )}
         </div>
 
@@ -322,11 +324,17 @@ export default function AdminProjects() {
 
         <div className="mt-4 flex flex-wrap gap-5">
           <label className="inline-flex items-center gap-2 text-sm">
-            <input type="checkbox" checked={form.featured} onChange={(e) => setForm((p) => ({ ...p, featured: e.target.checked }))} />
+            <input 
+            type="checkbox" 
+            checked={form.featured} 
+            onChange={(e) => setForm((p) => ({ ...p, featured: e.target.checked }))} />
             Featured
           </label>
           <label className="inline-flex items-center gap-2 text-sm">
-            <input type="checkbox" checked={form.isPublished} onChange={(e) => setForm((p) => ({ ...p, isPublished: e.target.checked }))} />
+            <input 
+            type="checkbox" 
+            checked={form.isPublished} 
+            onChange={(e) => setForm((p) => ({ ...p, isPublished: e.target.checked }))} />
             Published
           </label>
         </div>
