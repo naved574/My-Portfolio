@@ -177,21 +177,76 @@ export default function AdminProjects() {
       <form onSubmit={submit} className="mt-6 rounded-2xl border p-5">
         <h2 className="text-xl font-semibold">{editing ? "Edit Project" : "Add New Project"}</h2>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
-          <input className="rounded-lg border bg-transparent px-3 py-2" placeholder="Title" value={form.title} onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))} required />
-          <input className="rounded-lg border bg-transparent px-3 py-2" placeholder="Slug (optional)" value={form.slug} onChange={(e) => setForm((p) => ({ ...p, slug: e.target.value }))} />
-          <input className="rounded-lg border bg-transparent px-3 py-2" placeholder="Bio" value={form.bio} onChange={(e) => setForm((p) => ({ ...p, bio: e.target.value }))} />
-          <input className="rounded-lg border bg-transparent px-3 py-2" placeholder="Live URL" value={form.live || ""} onChange={(e) => setForm((p) => ({ ...p, live: e.target.value }))} />
-          <input className="rounded-lg border bg-transparent px-3 py-2" placeholder="Code URL" value={form.code || ""} onChange={(e) => setForm((p) => ({ ...p, code: e.target.value }))} />
-          <input className="rounded-lg border bg-transparent px-3 py-2" placeholder="Stack (comma separated)" value={toCsv(form.stack)} onChange={(e) => setForm((p) => ({ ...p, stack: fromCsv(e.target.value) }))} />
-          <input className="rounded-lg border bg-transparent px-3 py-2" placeholder="Features (comma separated)" value={toCsv(form.features)} onChange={(e) => setForm((p) => ({ ...p, features: fromCsv(e.target.value) }))} />
-          <input className="rounded-lg border bg-transparent px-3 py-2" placeholder="Challenges (comma separated)" value={toCsv(form.challenges)} onChange={(e) => setForm((p) => ({ ...p, challenges: fromCsv(e.target.value) }))} />
+          <input 
+          className="rounded-lg border bg-transparent px-3 py-2" 
+          placeholder="Title" 
+          value={form.title} 
+          onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))} required />
+
+          <input 
+          className="rounded-lg border bg-transparent px-3 py-2" 
+          placeholder="Slug (optional)" 
+          value={form.slug} 
+          onChange={(e) => setForm((p) => ({ ...p, slug: e.target.value }))} />
+
+          <input 
+          className="rounded-lg border bg-transparent px-3 py-2" 
+          placeholder="Bio" 
+          value={form.bio} 
+          onChange={(e) => setForm((p) => ({ ...p, bio: e.target.value }))} />
+
+          <input 
+          className="rounded-lg border bg-transparent px-3 py-2" 
+          placeholder="Live URL" 
+          value={form.live || ""} 
+          onChange={(e) => setForm((p) => ({ ...p, live: e.target.value }))} />
+
+          <input 
+          className="rounded-lg border bg-transparent px-3 py-2" 
+          placeholder="Code URL" 
+          value={form.code || ""} 
+          onChange={(e) => setForm((p) => ({ ...p, code: e.target.value }))} />
+
+          <input 
+          className="rounded-lg border bg-transparent px-3 py-2" 
+          placeholder="Stack (comma separated)" 
+          value={toCsv(form.stack)} 
+          onChange={(e) => setForm((p) => ({ ...p, stack: fromCsv(e.target.value) }))} />
+
+          <input 
+          className="rounded-lg border bg-transparent px-3 py-2" 
+          placeholder="Features (comma separated)" 
+          value={toCsv(form.features)} 
+          onChange={(e) => setForm((p) => ({ ...p, features: fromCsv(e.target.value) }))} />
+
+          <input 
+          className="rounded-lg border bg-transparent px-3 py-2" 
+          placeholder="Challenges (comma separated)" 
+          value={toCsv(form.challenges)} 
+          onChange={(e) => setForm((p) => ({ ...p, challenges: fromCsv(e.target.value) }))} />
         </div>
 
         <div className="mt-4 grid gap-4">
-          <textarea className="min-h-20 rounded-lg border bg-transparent px-3 py-2" placeholder="Overview" value={form.overview} onChange={(e) => setForm((p) => ({ ...p, overview: e.target.value }))} />
-          <textarea className="min-h-20 rounded-lg border bg-transparent px-3 py-2" placeholder="Purpose" value={form.purpose} onChange={(e) => setForm((p) => ({ ...p, purpose: e.target.value }))} />
-          <textarea className="min-h-20 rounded-lg border bg-transparent px-3 py-2" placeholder="Work" value={form.work} onChange={(e) => setForm((p) => ({ ...p, work: e.target.value }))} />
-          <textarea className="min-h-24 rounded-lg border bg-transparent px-3 py-2" placeholder="Description" value={form.description} onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))} required />
+          <textarea 
+          className="min-h-20 rounded-lg border bg-transparent px-3 py-2" 
+          placeholder="Overview" value={form.overview} 
+          onChange={(e) => setForm((p) => ({ ...p, overview: e.target.value }))} />
+
+          <textarea 
+          className="min-h-20 rounded-lg border bg-transparent px-3 py-2" 
+          placeholder="Purpose" value={form.purpose} 
+          onChange={(e) => setForm((p) => ({ ...p, purpose: e.target.value }))} />
+
+          <textarea 
+          className="min-h-20 rounded-lg border bg-transparent px-3 py-2" 
+          placeholder="Work" value={form.work} 
+          onChange={(e) => setForm((p) => ({ ...p, work: e.target.value }))} />
+
+          <textarea 
+          className="min-h-24 rounded-lg border bg-transparent px-3 py-2" 
+          placeholder="Description" value={form.description} 
+          onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))} 
+          required />
         </div>
 
         <div className="mt-6 rounded-xl border p-4">
