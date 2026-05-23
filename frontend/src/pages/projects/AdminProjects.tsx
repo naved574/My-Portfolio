@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   useAdminProjects,
@@ -6,7 +6,7 @@ import {
   useDeleteProject,
   useUpdateProject,
 } from "@/hooks/useProjects";
-import { clearAdminToken, getAdminToken } from "@/lib/auth";
+import { clearAdminToken } from "@/lib/auth";
 import { cloudinaryReady, uploadToCloudinary } from "@/lib/cloudinary";
 import type { Project, ProjectPayload } from "@/types/project";
 
@@ -39,7 +39,6 @@ const toCsv = (arr: string[]) => arr.join(", ");
 
 export default function AdminProjects() {
   const navigate = useNavigate();
-  const token = getAdminToken();
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState("all");
   const [editing, setEditing] = useState<Project | null>(null);
@@ -55,12 +54,6 @@ export default function AdminProjects() {
 
   const isSubmitting = createProject.isPending || updateProject.isPending;
   const canUploadGallery = useMemo(() => form.gallery.length < 8, [form.gallery.length]);
-
-  useEffect(() => {
-    if (!token) navigate("/admin/login");
-  }, [navigate, token]);
-
-  if (!token) return null;
 
   const resetForm = () => {
     setEditing(null);
@@ -156,6 +149,13 @@ export default function AdminProjects() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-3xl font-bold">Admin Projects</h1>
         <div className="flex gap-2">
+          <button
+            type="button"
+            className="rounded-lg border px-4 py-2"
+            onClick={() => navigate("/admin/messages")}
+          >
+            Messages
+          </button>
           <button type="button" className="rounded-lg border px-4 py-2" onClick={onLogout}>
             Logout
           </button>

@@ -114,7 +114,6 @@ const projectSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-projectSchema.index({ slug: 1 }, { unique: true });
 projectSchema.index({ isPublished: 1, featured: -1, sortOrder: 1, createdAt: -1 });
 projectSchema.index({ createdAt: -1 });
 

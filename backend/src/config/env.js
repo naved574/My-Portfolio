@@ -15,6 +15,8 @@ export const env = {
   MONGO_URI: process.env.MONGO_URI || "",
   JWT_SECRET: process.env.JWT_SECRET || "change-this-secret",
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || "7d",
+  USER_JWT_EXPIRES_IN: process.env.USER_JWT_EXPIRES_IN || "7d",
+  ADMIN_JWT_EXPIRES_IN: process.env.ADMIN_JWT_EXPIRES_IN || process.env.JWT_EXPIRES_IN || "7d",
   CLIENT_URL: process.env.CLIENT_URL || "http://localhost:5173",
   ADMIN_EMAIL: process.env.ADMIN_EMAIL || "",
   ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || "",

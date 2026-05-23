@@ -1,6 +1,8 @@
 import { ExternalLink, Github } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { useProjectBySlug } from "@/hooks/useProjects";
+import { getUserToken } from "@/lib/auth";
 
 const ListSection = ({ title, items }: { title: string; items: string[] }) => {
   if (!items.length) return null;
@@ -18,13 +20,31 @@ const ListSection = ({ title, items }: { title: string; items: string[] }) => {
 
 export default function ProjectDetail() {
   const { slug = "" } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { data, isLoading, isError } = useProjectBySlug(slug);
+  const userToken = getUserToken();
+  const project = data?.project;
+  const intent = searchParams.get("intent");
+
+  useEffect(() => {
+    if (!userToken || !intent || !project) return;
+
+    const target = intent === "code" ? project.code : intent === "live" ? project.live : "";
+    if (target) {
+      window.open(target, "_blank", "noopener,noreferrer");
+    }
+
+    const next = new URLSearchParams(searchParams);
+    next.delete("intent");
+    setSearchParams(next, { replace: true });
+  }, [intent, project, searchParams, setSearchParams, userToken]);
 
   if (isLoading) return <p className="mx-auto max-w-7xl px-4 py-12">Loading project...</p>;
-  if (isError || !data?.project)
+  if (isError || !project)
     return <p className="mx-auto max-w-7xl px-4 py-12 text-red-500">Project not found.</p>;
 
-  const { project } = data;
+  const loginToUnlock = (targetIntent: "code" | "live") =>
+    `/login?redirect=${encodeURIComponent(`/projects/${project.slug}`)}&intent=${targetIntent}`;
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -45,28 +65,46 @@ export default function ProjectDetail() {
             ))}
           </div>
           <div className="mt-7 flex flex-wrap gap-3">
-            {project.live && (
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border px-4 py-2"
-              >
-                <ExternalLink size={16} />
-                Live
-              </a>
-            )}
-            {project.code && (
-              <a
-                href={project.code}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border px-4 py-2"
-              >
-                <Github size={16} />
-                Code
-              </a>
-            )}
+            {project.live &&
+              (userToken ? (
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl border px-4 py-2"
+                >
+                  <ExternalLink size={16} />
+                  Live
+                </a>
+              ) : (
+                <Link
+                  to={loginToUnlock("live")}
+                  className="inline-flex items-center gap-2 rounded-xl border px-4 py-2"
+                >
+                  <ExternalLink size={16} />
+                  Login to Open Live Demo
+                </Link>
+              ))}
+            {project.code &&
+              (userToken ? (
+                <a
+                  href={project.code}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl border px-4 py-2"
+                >
+                  <Github size={16} />
+                  Code
+                </a>
+              ) : (
+                <Link
+                  to={loginToUnlock("code")}
+                  className="inline-flex items-center gap-2 rounded-xl border px-4 py-2"
+                >
+                  <Github size={16} />
+                  Login to View Code
+                </Link>
+              ))}
           </div>
         </div>
       </div>
@@ -121,4 +159,3 @@ export default function ProjectDetail() {
     </section>
   );
 }
-

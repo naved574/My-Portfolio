@@ -15,7 +15,7 @@ import {
   markContactMessageRead,
 } from "../controllers/contact.controller.js";
 import { updateProfile } from "../controllers/profile.controller.js";
-import { protect, requireAdmin } from "../middleware/auth.middleware.js";
+import { protectAdmin } from "../middleware/auth.middleware.js";
 import { validate } from "../middleware/validate.middleware.js";
 import {
   createProjectValidator,
@@ -24,7 +24,6 @@ import {
 import { updateProfileValidator } from "../validators/profile.validator.js";
 
 const router = Router();
-const adminOnly = [protect, requireAdmin];
 
 router.get("/health", (req, res) => {
   res.json({
@@ -43,30 +42,30 @@ router.use("/contact", contactRoutes);
 
 router.post(
   "/admin/projects",
-  ...adminOnly,
+  protectAdmin,
   validate(createProjectValidator),
   createProject
 );
-router.get("/admin/projects", ...adminOnly, getAdminProjects);
+router.get("/admin/projects", protectAdmin, getAdminProjects);
 router.patch(
   "/admin/projects/:id",
-  ...adminOnly,
+  protectAdmin,
   validate(updateProjectValidator),
   updateProject
 );
-router.delete("/admin/projects/:id", ...adminOnly, deleteProject);
+router.delete("/admin/projects/:id", protectAdmin, deleteProject);
 router.patch(
   "/admin/profile",
-  ...adminOnly,
+  protectAdmin,
   validate(updateProfileValidator),
   updateProfile
 );
-router.get("/admin/contact-messages", ...adminOnly, getContactMessages);
+router.get("/admin/contact-messages", protectAdmin, getContactMessages);
 router.patch(
   "/admin/contact-messages/:id/read",
-  ...adminOnly,
+  protectAdmin,
   markContactMessageRead
 );
-router.delete("/admin/contact-messages/:id", ...adminOnly, deleteContactMessage);
+router.delete("/admin/contact-messages/:id", protectAdmin, deleteContactMessage);
 
 export default router;
