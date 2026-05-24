@@ -47,7 +47,7 @@ export default function ProjectDetail() {
     `/login?redirect=${encodeURIComponent(`/projects/${project.slug}`)}&intent=${targetIntent}`;
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <section className="mx-auto max-w-7xl mt-10 px-4 py-15 sm:px-6 lg:px-8 duration-500">
       <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
         <div className="overflow-hidden rounded-2xl border">
           <img src={project.image} alt={project.title} className="h-full w-full object-cover" />

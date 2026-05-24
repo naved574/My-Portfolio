@@ -145,18 +145,20 @@ export default function AdminProjects() {
   };
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <section className="mx-auto max-w-7xl mt-10 px-4 py-10 sm:px-6 lg:px-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-3xl font-bold">Admin Projects</h1>
         <div className="flex gap-2">
           <button
             type="button"
-            className="rounded-lg border px-4 py-2"
+            className="rounded-lg border px-4 py-2 duration-300 hover:scale-[1.05] cursor-pointer "
             onClick={() => navigate("/admin/messages")}
           >
             Messages
           </button>
-          <button type="button" className="rounded-lg border px-4 py-2" onClick={onLogout}>
+          <button type="button" 
+          className="rounded-lg border px-4 py-2 duration-300 hover:scale-[1.05] cursor-pointer" 
+          onClick={onLogout}>
             Logout
           </button>
           {editing && (
@@ -344,7 +346,7 @@ export default function AdminProjects() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="mt-5 rounded-lg bg-black px-5 py-2 text-white disabled:opacity-50 dark:bg-white dark:text-black"
+          className="mt-5 rounded-lg bg-[var(--color-surface-2)] px-5 py-2 text-[var(--sec-color-text)] disabled:opacity-50 dark:bg-white dark:text-black cursor-pointer duration-300 hover:scale-[1.05]"
         >
           {isSubmitting ? "Saving..." : editing ? "Update Project" : "Create Project"}
         </button>
@@ -359,11 +361,11 @@ export default function AdminProjects() {
               setPage(1);
               setStatus(e.target.value);
             }}
-            className="rounded-lg border bg-transparent px-3 py-2"
+            className="rounded-lg border bg-transparent px-3 py-2  "
           >
-            <option value="all">All</option>
-            <option value="published">Published</option>
-            <option value="draft">Draft</option>
+            <option value="all"  className="text-slate-800">All</option>
+            <option value="published"  className="text-slate-800">Published</option>
+            <option value="draft"  className="text-slate-800">Draft</option>
           </select>
         </div>
 
@@ -391,14 +393,14 @@ export default function AdminProjects() {
                 <div className="flex gap-2">
                   <button
                     type="button"
-                    className="rounded-lg border px-3 py-2"
+                    className="rounded-lg border px-3 py-2 duration-300 hover:scale-[1.05] cursor-pointer"
                     onClick={() => onEdit(project)}
                   >
                     Edit
                   </button>
                   <button
                     type="button"
-                    className="rounded-lg border border-red-400 px-3 py-2 text-red-600"
+                    className="rounded-lg border border-red-400 px-3 py-2 text-red-600 duration-300 hover:scale-[1.05] cursor-pointer"
                     onClick={() => onDelete(project.id)}
                     disabled={deleteProject.isPending}
                   >
@@ -425,7 +427,7 @@ export default function AdminProjects() {
             </span>
             <button
               type="button"
-              className="rounded-lg border px-3 py-1 disabled:opacity-50"
+              className="rounded-lg border px-3 py-1 disabled:opacity-50 "
               disabled={page === data.pagination.totalPages}
               onClick={() => setPage((prev) => prev + 1)}
             >
