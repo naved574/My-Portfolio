@@ -249,6 +249,8 @@ export default function Navbar() {
   );
 
   return (
+
+    // ------- Navbar -----
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
@@ -257,51 +259,29 @@ export default function Navbar() {
       }`}
     >
       <nav className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+
+        <div className="flex items-center gap-2">
+        <button
+            onClick={() => setPanelOpen(true)}
+            className="cursor-pointer grid h-10 w-10 place-items-center rounded-xl  bg-transparent text-[color:var(--color-text)] duration-300 hover:scale-110 "
+            aria-label="Open navigation panel"
+          >
+            <Menu size={25} />
+          </button>
+
         <Link to="/" className="font-display text-lg font-bold tracking-tight" aria-label="Home" onClick={() => setPanelOpen(false)}>
           <div className="grid w-40 cursor-pointer place-items-center rounded-[10px] transition-opacity hover:opacity-90 sm:w-44">
             <img src={Logo} alt="Logo" className="h-full w-full" />
           </div>
         </Link>
-
-        <ul className="hidden items-center gap-1 lg:flex">
-          {navLinks.map((l) => {
-            const isActive = pathname === l.path;
-            return (
-              <li key={l.path}>
-                <button
-                  onClick={() => go(l.path)}
-                  className={`relative rounded-xl px-4 py-2 text-sm font-medium transition-colors ${
-                    isActive
-                      ? "text-[color:var(--color-text)]"
-                      : "text-[color:var(--color-muted)] hover:text-[color:var(--color-text)]"
-                  }`}
-                >
-                  {isActive && (
-                    <motion.span
-                      layoutId="nav-pill"
-                      className="absolute inset-0 -z-10 rounded-xl bg-[color:var(--color-surface)]"
-                      transition={{ type: "spring", stiffness: 340, damping: 32 }}
-                    />
-                  )}
-                  {l.label}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+        </div>
 
         <div className="flex items-center gap-2.5">
           <ThemeToggle />
           <div className="hidden lg:block">
             <ActionAuth />
           </div>
-          <button
-            onClick={() => setPanelOpen(true)}
-            className="grid h-10 w-10 place-items-center rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg)] text-[color:var(--color-text)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
-            aria-label="Open navigation panel"
-          >
-            <Menu size={18} />
-          </button>
+          
         </div>
       </nav>
 
