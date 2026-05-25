@@ -44,7 +44,7 @@ export default function Login() {
   };
 
   return (
-    <section className="mx-auto max-w-md px-4 py-16">
+    <section className="mx-auto max-w-md h-[90vh] px-4 py-16">
       <h1 className="text-3xl font-bold">Welcome Back</h1>
       <p className="mt-2 text-sm text-[color:var(--color-muted)]">
         Log in to unlock project source code and live demo links.
