@@ -58,7 +58,7 @@ export default function Signup() {
       <div className="animate-[fade-in_0.35s_ease-out]">
         <h1 className="text-3xl font-bold">Create Account</h1>
         <p className="mt-2 text-sm text-[color:var(--color-muted)]">
-          Sign up to unlock source code and live demos for all projects.
+          {/* Sign up to unlock source code and live demos for all projects. */}
         </p>
       </div>
 

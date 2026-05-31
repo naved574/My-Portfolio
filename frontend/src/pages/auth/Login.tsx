@@ -47,7 +47,6 @@ export default function Login() {
     <section className="mx-auto max-w-md h-[90vh] px-4 py-16">
       <h1 className="text-3xl font-bold">Welcome Back</h1>
       <p className="mt-2 text-sm text-[color:var(--color-muted)]">
-        Log in to unlock project source code and live demo links.
       </p>
 
       <form onSubmit={onSubmit} className="mt-8 space-y-4 rounded-2xl border p-6">
@@ -88,7 +87,9 @@ export default function Login() {
       <p className="mt-4 text-sm text-[color:var(--color-muted)]">
         New here?{" "}
         <Link
-          to={`/signup?redirect=${encodeURIComponent(redirect)}${intent ? `&intent=${encodeURIComponent(intent)}` : ""}`}
+          to={`/signup?redirect=${encodeURIComponent(redirect)}${intent ? 
+            `&intent=${encodeURIComponent(intent)}` :
+             ""}`}
           className="font-medium underline"
         >
           Create an account
