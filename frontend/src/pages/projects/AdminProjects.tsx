@@ -261,6 +261,7 @@ export default function AdminProjects() {
                 const file = e.target.files?.[0];
                 if (file) uploadMainImage(file);
               }}
+              className="cursor-pointer text-sm disabled:cursor-not-allowed disabled:opacity-50 text-[var(--color-muted)]"
             />
             {uploadingMain && <span className="text-sm">Uploading...</span>}
           </div>
@@ -283,6 +284,7 @@ export default function AdminProjects() {
                 const files = e.target.files;
                 if (files?.length) uploadGalleryImages(files);
               }}
+              className="cursor-pointer text-sm disabled:cursor-not-allowed disabled:opacity-50 text-[var(--color-muted)]"
             />
             {uploadingGallery && <span className="text-sm">Uploading gallery...</span>}
           </div>

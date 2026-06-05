@@ -14,7 +14,7 @@ export default function AdminMessages() {
   };
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <section className="mx-auto max-w-7xl px-4 pt-20  sm:px-6 lg:px-8">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-3xl font-bold">Admin Messages</h1>
         <div className="flex gap-2">
@@ -67,7 +67,7 @@ export default function AdminMessages() {
                   <button
                     type="button"
                     onClick={() => deleteMessage.mutate(item._id)}
-                    className="rounded-lg border border-red-400 px-3 py-2 text-sm text-red-600"
+                    className="cursor-pointer rounded-lg border border-red-400 px-3 py-2 text-sm text-red-600 duration-300 hover:bg-red-50 hover:scale-105"
                     disabled={deleteMessage.isPending}
                   >
                     Delete
