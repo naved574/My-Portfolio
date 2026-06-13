@@ -90,11 +90,16 @@ export default function Hero() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="mt-5 max-w-xl text-base leading-relaxed text-[color:var(--color-muted)] md:text-lg"
           >
-            I build modern, responsive, and user-friendly web experiences. Day to day I work
-            with <b className="text-black font-semibold">React</b>,{" "}
-            <b className="text-black font-semibold">Tailwind</b>, and{" "}
-            <b className="text-black font-semibold">Node.js</b> to ship
-            interfaces that feel fast and calm.
+            Building modern web applications,
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className=" max-w-xl text-base leading-relaxed text-[color:var(--color-muted)] md:text-lg"
+          >
+            AI tools and SaaS products.
           </motion.p>
 
           <motion.div
