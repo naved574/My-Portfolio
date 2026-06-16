@@ -1,52 +1,81 @@
-# 👨‍💻 Naved's Developer Portfolio
+# Naved's Developer Portfolio
 
-![Portfolio Preview](./screenshot.png) <!-- Replace this with an actual screenshot of your portfolio -->
+Modern full-stack portfolio for Mohmad Naved, built to showcase projects, skills, resume, contact messages, and an admin-managed project CMS.
 
-> A modern, fully responsive personal portfolio designed to showcase my projects, skills, and journey as a Full-Stack Developer. 
+Live demo: https://dev-naved-portfolio-03.vercel.app/
 
-**🔴 Live Demo:** [Click here to view the live portfolio](https://dev-naved-portfolio-03.vercel.app/)
+## Features
 
-## 📖 About This Project
+- Responsive React portfolio with home, about, projects, project detail, contact, and auth pages.
+- Admin dashboard for creating, updating, publishing, and deleting portfolio projects.
+- Contact form with frontend and backend validation plus queued persistence.
+- JWT-based public user and admin authentication.
+- MongoDB/Mongoose models for projects, profiles, users, and contact messages.
+- Cloudinary image uploads for project cover and gallery images.
 
-This portfolio is built with a focus on modern UI/UX principles, featuring clean layouts, smooth animations, and a fully responsive design. It serves as a central hub for my professional identity, highlighting my progression from frontend development to building full-stack MERN applications.
+## Tech Stack
 
-## ✨ Key Features
+- Frontend: React, TypeScript, Vite, Tailwind CSS, React Router, React Query, Framer Motion.
+- Backend: Node.js, Express, MongoDB, Mongoose, JWT, bcrypt.
+- UI: Radix UI primitives, lucide-react icons, custom layout components.
+- Deployment: Vercel for frontend and Render for backend.
 
-*   **Modern UI/UX:** Clean, minimalist design with attention to typography and spacing.
-*   **Smooth Animations:** Engaging visual elements (incorporating glassmorphism and subtle animations) to enhance user experience without sacrificing performance.
-*   **Fully Responsive:** Optimized for all devices, from mobile phones to large desktop screens.
-*   **Project Showcase:** Dedicated section highlighting my best work, including full-stack applications and frontend clones.
-*   **Easy Contact:** Streamlined ways to get in touch for freelance opportunities or full-time roles.
+## Local Setup
 
-## 🛠️ Tech Stack
+Install frontend dependencies:
 
-This project was crafted using the following technologies:
-
-*   **Frontend:** React.js
-*   **Styling:** Tailwind CSS (for rapid, responsive, and highly customizable UI)
-*   **Backend:** Node.js, Express.js, MongoDB, REST APIs
-*   **Icons:** Remix Icon
-*   **Animations:** Framer Motion / CSS Transitions 
-*   **Deployment:** Vercel / Render
-
-## 🚀 Running the Project Locally
-
-If you want to run this project on your local machine, follow these steps:
-
-1. **Clone the repository:**
 ```bash
-   git clone [https://github.com/naved574/My-Portfolio.git](https://github.com/naved574/My-Portfolio.git)
+cd frontend
+npm install
+npm run dev
+```
 
-**Navigate to the project directory:**
+Install backend dependencies:
 
-Bash:
-   cd My-Portfolio
-   Install the dependencies:
+```bash
+cd backend
+npm install
+npm run dev
+```
 
-Bash:
-   npm install
-   Start the development server:
+## Environment Variables
 
-Bash:
-   npm run dev
-   # or npm start (depending on your setup)
+Frontend:
+
+```env
+VITE_API_BASE_URL=http://localhost:3000/api
+VITE_CLOUDINARY_CLOUD_NAME=your_cloud_name
+VITE_CLOUDINARY_UPLOAD_PRESET=your_upload_preset
+```
+
+Backend:
+
+```env
+PORT=3000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_strong_jwt_secret
+CLIENT_URL=http://localhost:5173
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=your_admin_password
+```
+
+Use `CLIENT_URLS` as a comma-separated list if you need to allow more frontend origins in production.
+
+## Scripts
+
+Frontend:
+
+```bash
+npm run dev
+npm run build
+npm run lint
+npm run test
+```
+
+Backend:
+
+```bash
+npm run dev
+npm start
+npm run seed:admin
+```

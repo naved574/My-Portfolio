@@ -1,78 +1,70 @@
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/common/SectionHeading";
-import {
-  Code2,
-  Palette,
-  Server,
-  Database,
-  GitBranch,
-  Sparkles,
-  Layers,
-  Workflow,
-} from "lucide-react";
+import { Code2, Database, GitBranch, Layers, Palette, Server, Sparkles, Workflow } from "lucide-react";
 
 const skills = [
-  { 
-    icon: Code2, 
-    label: "React & TypeScript", 
-    desc: "Component architecture, hooks, state patterns." 
+  {
+    icon: Code2,
+    label: "React & TypeScript",
+    desc: "Component architecture, hooks, state patterns.",
   },
-  { 
-    icon: Palette, 
-    label: "Tailwind CSS", 
-    desc: "Design-token-first UI, responsive layouts." 
+  {
+    icon: Palette,
+    label: "Tailwind CSS",
+    desc: "Design-token-first UI, responsive layouts.",
   },
-  { 
-    icon: Server, 
-    label: "Node.js & REST", 
-    desc: "APIs, auth, realtime with WebSockets." 
+  {
+    icon: Server,
+    label: "Node.js & REST",
+    desc: "Express APIs, auth, validation, and clean route design.",
   },
-  { 
-    icon: Database, 
-    label: "Databases", 
-    desc: "PostgreSQL, SQLite, schema design." 
+  {
+    icon: Database,
+    label: "MongoDB & Mongoose",
+    desc: "Schemas, indexes, pagination, and admin data flows.",
   },
-  { icon: Sparkles, 
-    label: "Framer Motion", 
-    desc: "Subtle, performant interface animation." 
+  {
+    icon: Sparkles,
+    label: "Framer Motion",
+    desc: "Subtle, performant interface animation.",
   },
-  { 
-    icon: GitBranch, 
-    label: "Git & CI", 
-    desc: "Clean branches, fast, predictable pipelines." 
+  {
+    icon: GitBranch,
+    label: "Git & Deployment",
+    desc: "GitHub workflow with Vercel and Render deployments.",
   },
-  { 
-    icon: Layers, 
-    label: "Design Systems", 
-    desc: "Reusable primitives, accessible by default." 
+  {
+    icon: Layers,
+    label: "Reusable UI",
+    desc: "Shared components, layout primitives, and accessible states.",
   },
-  { 
-    icon: Workflow, 
-    label: "Product Thinking", 
-    desc: "Shipping for real users, not just specs." 
+  {
+    icon: Workflow,
+    label: "Product Thinking",
+    desc: "Shipping for real users, not just specs.",
   },
 ];
 
 const timeline = [
-  { 
-    year: "2023", 
-    title: "Started coding seriously", 
-    desc: "Self-taught React and built my first landing pages." 
+  {
+    year: "2023",
+    title: "Started coding seriously",
+    desc: "Self-taught React and built my first landing pages.",
   },
-  { 
-    year: "2024", 
-    title: "First real project", 
-    desc: "Shipped a dashboard for a small studio, learning Node & Postgres." 
+  {
+    year: "2024",
+    title: "First real project",
+    desc: "Built full-stack features with React, Node.js, Express, and MongoDB.",
   },
-  { 
-    year: "2025", 
-    title: "Freelance & open source", 
-    desc: "Client work across e-commerce and tools; contributed to OSS UI kits." 
+  {
+    year: "2025",
+    title: "Portfolio CMS",
+    desc: "Added admin login, project management, image uploads, and contact messages.",
   },
-  { 
-    year: "2025", 
-    title: "Full-stack focus", 
-    desc: "Building motion-rich, production-grade apps end to end." 
+  {
+    year: "2025",
+    title: "Full-stack focus",
+    desc: "Building motion-rich, production-grade apps end to end.",
   },
 ];
 
@@ -83,24 +75,24 @@ export default function About() {
         <SectionHeading
           eyebrow="About"
           title="Calm interfaces, carefully engineered."
-          description="I care about the small details — motion curves, spacing, and how copy reads. I care even more about shipping: interfaces that load fast, feel intuitive, and stay maintainable for the team that inherits them."
+          description="I care about the small details - motion curves, spacing, and how copy reads. I care even more about shipping: interfaces that load fast, feel intuitive, and stay maintainable."
         />
 
         <div className="mt-14 grid grid-cols-2 gap-3 md:grid-cols-4">
-          {skills.map((s, i) => (
+          {skills.map((skill, index) => (
             <motion.div
-              key={s.label}
+              key={skill.label}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.45, delay: i * 0.04 }}
+              transition={{ duration: 0.45, delay: index * 0.04 }}
               className="group rounded-[14px] border border-[color:var(--color-border)] bg-white p-4 transition-all hover:-translate-y-1 hover:shadow-soft"
             >
               <div className="grid h-9 w-9 place-items-center rounded-lg bg-[color:var(--color-surface)] text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-                <s.icon size={18} />
+                <skill.icon size={18} />
               </div>
-              <div className="mt-3 text-sm font-semibold text-[color:var(--color-text)]">{s.label}</div>
-              <div className="mt-1 text-xs leading-relaxed text-[color:var(--color-muted)]">{s.desc}</div>
+              <div className="mt-3 text-sm font-semibold text-[color:var(--color-text)]">{skill.label}</div>
+              <div className="mt-1 text-xs leading-relaxed text-[color:var(--color-muted)]">{skill.desc}</div>
             </motion.div>
           ))}
         </div>
@@ -108,30 +100,22 @@ export default function About() {
         <div className="mt-20 grid grid-cols-1 gap-10 md:grid-cols-[220px_1fr]">
           <div>
             <h3 className="font-display text-2xl font-bold">Journey</h3>
-            <p className="mt-2 text-sm text-[color:var(--color-muted)]">
-              A short timeline of how I got here.
-            </p>
+            <p className="mt-2 text-sm text-[color:var(--color-muted)]">A short timeline of how I got here.</p>
           </div>
           <ol className="relative space-y-8 border-l border-[color:var(--color-border)] pl-6">
-            {timeline.map((t, i) => (
+            {timeline.map((item, index) => (
               <motion.li
-                key={t.year}
+                key={`${item.year}-${item.title}`}
                 initial={{ opacity: 0, x: -12 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
                 className="relative"
               >
                 <span className="absolute -left-[29px] top-1.5 grid h-4 w-4 place-items-center rounded-full border-2 border-white bg-primary shadow-soft" />
-                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-                  {t.year}
-                </div>
-                <div className="mt-1 text-lg font-semibold text-[color:var(--color-text)]">
-                  {t.title}
-                </div>
-                <div className="mt-1 text-sm leading-relaxed text-[color:var(--color-muted)]">
-                  {t.desc}
-                </div>
+                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">{item.year}</div>
+                <div className="mt-1 text-lg font-semibold text-[color:var(--color-text)]">{item.title}</div>
+                <div className="mt-1 text-sm leading-relaxed text-[color:var(--color-muted)]">{item.desc}</div>
               </motion.li>
             ))}
           </ol>

@@ -8,6 +8,16 @@ type SignupResponse = {
   user: { id: string; fullName: string; email: string };
 };
 
+type ApiErrorResponse = {
+  response?: {
+    data?: {
+      error?: {
+        message?: string;
+      };
+    };
+  };
+};
+
 const parseSafeRedirect = (value: string | null) => {
   if (!value || !value.startsWith("/")) return "/projects";
   if (value.startsWith("//")) return "/projects";
@@ -45,8 +55,9 @@ export default function Signup() {
 
       const query = intent ? `?intent=${encodeURIComponent(intent)}` : "";
       navigate(`${redirect}${query}`);
-    } catch (err: any) {
-      const message = err?.response?.data?.error?.message || "Signup failed. Please try again.";
+    } catch (err: unknown) {
+      const apiError = err as ApiErrorResponse;
+      const message = apiError.response?.data?.error?.message || "Signup failed. Please try again.";
       setError(message);
     } finally {
       setLoading(false);

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Download, Mail, Github, Linkedin } from "lucide-react";
+import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
 import portrait from "@/assets/images/portrait.webp";
 import bgVideo from "@/assets/videos/hero-bg.webm";
 
@@ -15,7 +15,7 @@ export default function Hero() {
     const check = () =>
       setIsSmall(
         window.matchMedia("(max-width: 640px)").matches ||
-          window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches,
       );
     check();
     window.addEventListener("resize", check);
@@ -23,12 +23,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section
-      id="home"
-      className="relative isolate overflow-hidden pt-24 md:pt-28 "
-      aria-label="Introduction"
-    >
-      {/* Video background */}
+    <section id="home" className="relative isolate overflow-hidden pt-24 md:pt-28" aria-label="Introduction">
       <div className="pointer-events-none absolute inset-0 -z-10">
         {!isSmall && (
           <video
@@ -45,14 +40,12 @@ export default function Hero() {
             onCanPlay={() => setVideoReady(true)}
           />
         )}
-        {/* Light overlays for readability */}
         <div className="absolute inset-0 bg-white/50" />
         <div className="absolute inset-0 bg-gradient-to-b from-white via-white/60 to-white" />
         <div className="absolute inset-0 bg-grid opacity-[0.35]" />
       </div>
 
-      <div className=" rounded-xl mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-5 pb-20 pt-8 md:grid-cols-[1.1fr_0.9fr] md:gap-16 md:px-8 md:pb-28 md:pt-16">
-        {/* On mobile we want image first; on desktop text first */}
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 rounded-xl px-5 pb-20 pt-8 md:grid-cols-[1.1fr_0.9fr] md:gap-16 md:px-8 md:pb-28 md:pt-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -78,10 +71,8 @@ export default function Hero() {
             transition={{ delay: 0.12, duration: 0.6 }}
             className="font-display mt-5 text-4xl font-bold leading-[1.05] tracking-tight text-black md:text-6xl"
           >
-            
-            Hi, I'm <span className="text-primary">Mohmad Naved</span> —<br className="hidden md:block" />{" "}
-            a full-stack developer
-            
+            Hi, I'm <span className="text-primary">Mohmad Naved</span> -<br className="hidden md:block" /> a
+            full-stack developer
           </motion.h1>
 
           <motion.p
@@ -90,16 +81,7 @@ export default function Hero() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="mt-5 max-w-xl text-base leading-relaxed text-[color:var(--color-muted)] md:text-lg"
           >
-            Building modern web applications,
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className=" max-w-xl text-base leading-relaxed text-[color:var(--color-muted)] md:text-lg"
-          >
-            AI tools and SaaS products.
+            Building modern web applications, AI tools, and SaaS products.
           </motion.p>
 
           <motion.div
@@ -110,14 +92,14 @@ export default function Hero() {
           >
             <button
               onClick={() => navigate("/projects")}
-              className="group inline-flex items-center gap-2 rounded-full bg-black px-5 py-3 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-gray-900 "
+              className="group inline-flex items-center gap-2 rounded-full bg-black px-5 py-3 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-gray-900"
             >
               View Projects
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
             </button>
             <button
               onClick={() => navigate("/contact")}
-              className="inline-flex items-center gap-2 rounded-full border bg-white px-5 py-3 text-sm font-medium text-black transition-all hover:-translate-y-0.5 "
+              className="inline-flex items-center gap-2 rounded-full border bg-white px-5 py-3 text-sm font-medium text-black transition-all hover:-translate-y-0.5"
             >
               <Mail size={16} /> Contact Me
             </button>
@@ -158,7 +140,6 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Portrait */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}

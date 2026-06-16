@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  CircleUserRound,
   Download,
   FileText,
   Home,
@@ -10,7 +9,6 @@ import {
   Menu,
   MessageCircle,
   Moon,
-  Palette,
   PanelsTopLeft,
   Settings,
   ShieldCheck,
@@ -42,6 +40,8 @@ type UserMe = {
   };
 };
 
+type Theme = "light" | "dark" | "system";
+
 const navLinks = [
   { path: "/", label: "Home", icon: Home },
   { path: "/about", label: "About", icon: Info },
@@ -53,10 +53,146 @@ function getInitials(name: string, email?: string) {
   const trimmed = name.trim();
   if (trimmed) {
     const parts = trimmed.split(/\s+/).slice(0, 2);
-    return parts.map((p) => p[0]?.toUpperCase() || "").join("");
+    return parts.map((part) => part[0]?.toUpperCase() || "").join("");
   }
   if (email) return email[0]?.toUpperCase() || "U";
   return "U";
+}
+
+type ActionAuthProps = {
+  insidePanel?: boolean;
+  initials: string;
+  isLoggedIn: boolean;
+  go: (path: string) => void;
+  logout: () => void;
+};
+
+function ActionAuth({ insidePanel = false, initials, isLoggedIn, go, logout }: ActionAuthProps) {
+  if (!isLoggedIn) {
+    return (
+      <button
+        onClick={() => go("/login")}
+        className={`rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg)] px-3.5 py-2 text-sm font-medium text-[color:var(--color-text)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)] ${insidePanel ? "w-full text-left" : ""}`}
+      >
+        Login
+      </button>
+    );
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-bg)] text-sm font-semibold text-[color:var(--color-text)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
+          aria-label="Open account menu"
+        >
+          {initials}
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="end"
+        className="w-56 rounded-2xl border-[color:var(--color-border)] bg-[color:color-mix(in_srgb,var(--color-bg)_88%,transparent)] p-1.5 shadow-xl backdrop-blur-md"
+      >
+        <DropdownMenuItem onClick={() => go("/projects")} className="rounded-lg">
+          My Access
+        </DropdownMenuItem>
+        <DropdownMenuItem className="rounded-lg">Manage Account</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={logout} className="rounded-lg text-red-500 focus:text-red-500">
+          <LogOut className="mr-2 h-4 w-4" /> Logout
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+type SettingsMenuProps = {
+  isAdmin: boolean;
+  isLoggedIn: boolean;
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+  go: (path: string) => void;
+  logout: () => void;
+};
+
+function SettingsMenu({ isAdmin, isLoggedIn, theme, setTheme, go, logout }: SettingsMenuProps) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          className="grid h-10 w-10 place-items-center rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg)] text-[color:var(--color-text)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
+          aria-label="Open settings menu"
+        >
+          <Menu size={18} />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="end"
+        side="top"
+        className="w-64 rounded-2xl border-[color:var(--color-border)] bg-[color:color-mix(in_srgb,var(--color-bg)_88%,transparent)] p-1.5 shadow-xl backdrop-blur-md"
+      >
+        <DropdownMenuItem className="rounded-lg">
+          <Settings className="mr-2 h-4 w-4" /> Settings
+        </DropdownMenuItem>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger className="rounded-lg">
+            <FileText className="mr-2 h-4 w-4" /> Resume
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent className="rounded-xl border-[color:var(--color-border)] bg-[color:color-mix(in_srgb,var(--color-bg)_92%,transparent)] backdrop-blur-md">
+            <DropdownMenuItem asChild className="rounded-lg">
+              <a href="/resume.pdf" target="_blank" rel="noreferrer">
+                View Resume
+              </a>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild className="rounded-lg">
+              <a href="/resume.pdf" download>
+                <Download className="mr-2 h-4 w-4" /> Download Resume
+              </a>
+            </DropdownMenuItem>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger className="rounded-lg">
+            <Moon className="mr-2 h-4 w-4" /> Theme
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent className="rounded-xl border-[color:var(--color-border)] bg-[color:color-mix(in_srgb,var(--color-bg)_92%,transparent)] backdrop-blur-md">
+            <DropdownMenuItem onClick={() => setTheme("light")} className="rounded-lg">
+              Light {theme === "light" ? "*" : ""}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("dark")} className="rounded-lg">
+              Dark {theme === "dark" ? "*" : ""}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("system")} className="rounded-lg">
+              System {theme === "system" ? "*" : ""}
+            </DropdownMenuItem>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+        <DropdownMenuItem className="rounded-lg">Privacy & Policy</DropdownMenuItem>
+        <DropdownMenuItem className="rounded-lg">
+          <UserCog className="mr-2 h-4 w-4" /> Manage Account
+        </DropdownMenuItem>
+        {isAdmin && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => go("/admin/projects")} className="rounded-lg">
+              <ShieldCheck className="mr-2 h-4 w-4" /> Admin Dashboard
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => go("/admin/messages")} className="rounded-lg">
+              Contact Messages
+            </DropdownMenuItem>
+          </>
+        )}
+        {isLoggedIn && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={logout} className="rounded-lg text-red-500 focus:text-red-500">
+              <LogOut className="mr-2 h-4 w-4" /> Logout
+            </DropdownMenuItem>
+          </>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 }
 
 export default function Navbar() {
@@ -131,126 +267,7 @@ export default function Navbar() {
     navigate("/");
   };
 
-  const ActionAuth = ({ insidePanel = false }: { insidePanel?: boolean }) => {
-    if (!isLoggedIn) {
-      return (
-        <button
-          onClick={() => go("/login")}
-          className={`rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg)] px-3.5 py-2 text-sm font-medium text-[color:var(--color-text)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)] ${insidePanel ? "w-full text-left" : ""}`}
-        >
-          Login
-        </button>
-      );
-    }
-
-    return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-bg)] text-sm font-semibold text-[color:var(--color-text)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
-            aria-label="Open account menu"
-          >
-            {initials}
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent
-          align="end"
-          className="w-56 rounded-2xl border-[color:var(--color-border)] bg-[color:color-mix(in_srgb,var(--color-bg)_88%,transparent)] p-1.5 shadow-xl backdrop-blur-md"
-        >
-          <DropdownMenuItem onClick={() => go("/projects")} className="rounded-lg">
-            My Access
-          </DropdownMenuItem>
-          <DropdownMenuItem className="rounded-lg">Manage Account</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={logout} className="rounded-lg text-red-500 focus:text-red-500">
-            <LogOut className="mr-2 h-4 w-4" /> Logout
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    );
-  };
-
-  const SettingsMenu = () => (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <button
-          className="grid h-10 w-10 place-items-center rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg)] text-[color:var(--color-text)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
-          aria-label="Open settings menu"
-        >
-          <Menu size={18} />
-        </button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        side="top"
-        className="w-64 rounded-2xl border-[color:var(--color-border)] bg-[color:color-mix(in_srgb,var(--color-bg)_88%,transparent)] p-1.5 shadow-xl backdrop-blur-md"
-      >
-        <DropdownMenuItem className="rounded-lg">
-          <Settings className="mr-2 h-4 w-4" /> Settings
-        </DropdownMenuItem>
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger className="rounded-lg">
-            <FileText className="mr-2 h-4 w-4" /> Resume
-          </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent className="rounded-xl border-[color:var(--color-border)] bg-[color:color-mix(in_srgb,var(--color-bg)_92%,transparent)] backdrop-blur-md">
-            <DropdownMenuItem asChild className="rounded-lg">
-              <a href="/resume.pdf" target="_blank" rel="noreferrer">
-                View Resume
-              </a>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild className="rounded-lg">
-              <a href="/resume.pdf" download>
-                <Download className="mr-2 h-4 w-4" /> Download Resume
-              </a>
-            </DropdownMenuItem>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger className="rounded-lg">
-            <Moon className="mr-2 h-4 w-4" /> Theme
-          </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent className="rounded-xl border-[color:var(--color-border)] bg-[color:color-mix(in_srgb,var(--color-bg)_92%,transparent)] backdrop-blur-md">
-            <DropdownMenuItem onClick={() => setTheme("light")} className="rounded-lg">
-              Light {theme === "light" ? "•" : ""}
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("dark")} className="rounded-lg">
-              Dark {theme === "dark" ? "•" : ""}
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("system")} className="rounded-lg">
-              System {theme === "system" ? "•" : ""}
-            </DropdownMenuItem>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-        <DropdownMenuItem className="rounded-lg">Privacy & Policy</DropdownMenuItem>
-        <DropdownMenuItem className="rounded-lg">
-          <UserCog className="mr-2 h-4 w-4" /> Manage Account
-        </DropdownMenuItem>
-        {isAdmin && (
-          <>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => go("/admin/projects")} className="rounded-lg">
-              <ShieldCheck className="mr-2 h-4 w-4" /> Admin Dashboard
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => go("/admin/messages")} className="rounded-lg">
-              Contact Messages
-            </DropdownMenuItem>
-          </>
-        )}
-        {isLoggedIn && (
-          <>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={logout} className="rounded-lg text-red-500 focus:text-red-500">
-              <LogOut className="mr-2 h-4 w-4" /> Logout
-            </DropdownMenuItem>
-          </>
-        )}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-
   return (
-
-    // ------- Navbar -----
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
@@ -259,29 +276,32 @@ export default function Navbar() {
       }`}
     >
       <nav className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-
         <div className="flex items-center gap-2">
-        <button
+          <button
             onClick={() => setPanelOpen(true)}
-            className="cursor-pointer grid h-10 w-10 place-items-center rounded-xl  bg-transparent text-[color:var(--color-text)] duration-300 hover:scale-110 "
+            className="grid h-10 w-10 cursor-pointer place-items-center rounded-xl bg-transparent text-[color:var(--color-text)] duration-300 hover:scale-110"
             aria-label="Open navigation panel"
           >
             <Menu size={25} />
           </button>
 
-        <Link to="/" className="font-display text-lg font-bold tracking-tight" aria-label="Home" onClick={() => setPanelOpen(false)}>
-          <div className="grid w-40 cursor-pointer place-items-center rounded-[10px] transition-opacity hover:opacity-90 sm:w-44">
-            <img src={Logo} alt="Logo" className="h-full w-full" />
-          </div>
-        </Link>
+          <Link
+            to="/"
+            className="font-display text-lg font-bold tracking-tight"
+            aria-label="Home"
+            onClick={() => setPanelOpen(false)}
+          >
+            <div className="grid w-40 cursor-pointer place-items-center rounded-[10px] transition-opacity hover:opacity-90 sm:w-44">
+              <img src={Logo} alt="Logo" className="h-full w-full" />
+            </div>
+          </Link>
         </div>
 
         <div className="flex items-center gap-2.5">
           <ThemeToggle />
           <div className="hidden lg:block">
-            <ActionAuth />
+            <ActionAuth initials={initials} isLoggedIn={isLoggedIn} go={go} logout={logout} />
           </div>
-          
         </div>
       </nav>
 
@@ -315,13 +335,13 @@ export default function Navbar() {
               </div>
 
               <div className="space-y-1">
-                {navLinks.map((l) => {
-                  const isActive = pathname === l.path;
-                  const Icon = l.icon;
+                {navLinks.map((link) => {
+                  const isActive = pathname === link.path;
+                  const Icon = link.icon;
                   return (
                     <button
-                      key={l.path}
-                      onClick={() => go(l.path)}
+                      key={link.path}
+                      onClick={() => go(link.path)}
                       className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-base transition-colors ${
                         isActive
                           ? "bg-[color:var(--color-surface)] text-[color:var(--color-text)]"
@@ -329,7 +349,7 @@ export default function Navbar() {
                       }`}
                     >
                       <Icon size={17} />
-                      {l.label}
+                      {link.label}
                     </button>
                   );
                 })}
@@ -363,9 +383,16 @@ export default function Navbar() {
 
               <div className="mt-auto flex items-center gap-2 border-t border-[color:var(--color-border)] pt-3">
                 <div className="flex-1">
-                  <ActionAuth insidePanel />
+                  <ActionAuth insidePanel initials={initials} isLoggedIn={isLoggedIn} go={go} logout={logout} />
                 </div>
-                <SettingsMenu />
+                <SettingsMenu
+                  isAdmin={isAdmin}
+                  isLoggedIn={isLoggedIn}
+                  theme={theme}
+                  setTheme={setTheme}
+                  go={go}
+                  logout={logout}
+                />
               </div>
             </motion.aside>
           </>

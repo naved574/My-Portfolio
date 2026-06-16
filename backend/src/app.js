@@ -6,15 +6,21 @@ import { errorHandler } from "./middleware/error.middleware.js";
 import { notFound } from "./middleware/notFound.middleware.js";
 
 const app = express();
+const normalizeOrigin = (origin) => origin.replace(/\/$/, "");
+const allowedOrigins = [
+  env.CLIENT_URL,
+  "https://dev-naved-portfolio-03.vercel.app",
+  ...env.CLIENT_URLS.split(",").map((origin) => origin.trim()),
+].filter(Boolean).map(normalizeOrigin);
 
 app.use(
   cors({
-    origin: "*",
-  // cors({
-  //   origin:[ 
-  //     env.CLIENT_URL,
-  //     "https://dev-naved-portfolio-03.vercel.app/",
-  //   ],
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(normalizeOrigin(origin))) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   })
 );

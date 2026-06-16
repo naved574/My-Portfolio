@@ -3,9 +3,9 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { CheckCircle2, Mail, Send, Github, Linkedin } from "lucide-react";
 import SectionHeading from "@/components/common/SectionHeading";
+import { api } from "@/lib/api";
 import { contactSchema, type ContactForm } from "@/utils/validators";
 
-const API_URL = import.meta.env.VITE_API_URL;
 const CONTACT_SEND_TIMEOUT_MS = 7000;
 
 export default function Contact() {
@@ -48,7 +48,7 @@ export default function Contact() {
     activeControllerRef.current = controller;
 
     try {
-      const response = await axios.post(`${API_URL}/contact`, parsed.data, {
+      const response = await api.post("/contact", parsed.data, {
         signal: controller.signal,
         timeout: CONTACT_SEND_TIMEOUT_MS,
       });
@@ -96,7 +96,7 @@ export default function Contact() {
             />
             <div className="mt-8 space-y-3 text-sm">
               <a
-                href="mailto:navedansari2543@gmail.com"
+                href="mailto:dev.naved@gmail.com"
                 className="inline-flex items-center gap-3 rounded-[14px] border border-[color:var(--color-border)] bg-white px-4 py-3 transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
               >
                 <span className="grid h-9 w-9 place-items-center rounded-lg bg-[color:var(--color-surface)] text-primary">

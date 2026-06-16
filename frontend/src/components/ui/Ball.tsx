@@ -1,69 +1,31 @@
-import { useRef, useMemo, useState } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 
 const RotatingShape = () => {
-  const meshRef = useRef(null);
-  const groupRef = useRef(null);
-  
-  // Mouse movement track karne ke liye
+  const meshRef = useRef<THREE.Mesh>(null);
+  const groupRef = useRef<THREE.Group>(null);
+
   useFrame((state) => {
-    if (!meshRef.current) return;
+    if (!meshRef.current || !groupRef.current) return;
     const t = state.clock.getElapsedTime();
-    
-    // 1. Automatic Rotation
-    gradientMaterial.uniforms.uTime.value = t;
+
     meshRef.current.rotation.y = t * 0.15;
-    
-    // 2. Cursor Movement (Parallax)
+
     const targetX = state.mouse.x * 0.5;
     const targetY = state.mouse.y * 0.5;
-    
+
     groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetX, 0.1);
     groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, -targetY, 0.1);
   });
-
-  const gradientMaterial = useMemo(() => {
-    return new THREE.ShaderMaterial({
-      uniforms: {
-        uTime: { value: 0 },
-        uColor1: { value: new THREE.Color('#4F9CF9') },
-        uColor2: { value: new THREE.Color('#7C5CFF') },
-      },
-      vertexShader: `
-        varying vec3 vPosition;
-        varying vec3 vNormal;
-        void main() {
-          vPosition = position;
-          vNormal = normalize(normalMatrix * normal);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform float uTime;
-        uniform vec3 uColor1;
-        uniform vec3 uColor2;
-        varying vec3 vPosition;
-        varying vec3 vNormal;
-        void main() {
-          float mixer = (vPosition.y + 1.5) / 3.0;
-          vec3 baseColor = mix(uColor1, uColor2, mixer);
-          float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 2.0);
-          vec3 finalColor = baseColor + fresnel * 0.3;
-          gl_FragColor = vec4(finalColor, 0.85);
-        }
-      `,
-      transparent: true,
-    });
-  }, []);
 
   return (
     <group ref={groupRef}>
       <Float speed={2} rotationIntensity={0.3} floatIntensity={0.5}>
         <mesh ref={meshRef}>
           <icosahedronGeometry args={[1.8, 1]} />
-          <primitive object={gradientMaterial} attach="material" />
+          <meshStandardMaterial color="#4F9CF9" emissive="#1F4FD8" emissiveIntensity={0.18} roughness={0.35} />
         </mesh>
         <mesh>
           <icosahedronGeometry args={[1.85, 1]} />
@@ -83,8 +45,6 @@ const Ball = () => {
       
       <RotatingShape />
 
-      {/* ZOOM FEATURE: enableZoom={true} se mouse scroll se zoom hoga */}
-      {/* enablePan={false} taki object screen se bahar na khisak jaye */}
       <OrbitControls 
         enableZoom={true} 
         enablePan={false} 
