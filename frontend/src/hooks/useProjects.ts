@@ -14,6 +14,15 @@ export const useProjects = (page = 1, limit = 9) =>
       ),
   });
 
+export const useFeaturedProjects = (limit = 5) =>
+  useQuery({
+    queryKey: ["featured-projects", limit],
+    queryFn: async () =>
+      unwrapData<ProjectsListResponse>(
+        await api.get("/projects", { params: { featured: true, limit } })
+      ),
+  });
+
 export const useProjectBySlug = (slug: string) =>
   useQuery({
     queryKey: ["project", slug],
@@ -39,6 +48,7 @@ export const useCreateProject = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-projects"] });
       queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["featured-projects"] });
     },
   });
 };
@@ -51,6 +61,7 @@ export const useUpdateProject = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-projects"] });
       queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["featured-projects"] });
       queryClient.invalidateQueries({ queryKey: ["project"] });
     },
   });
@@ -63,7 +74,7 @@ export const useDeleteProject = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-projects"] });
       queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["featured-projects"] });
     },
   });
 };
-

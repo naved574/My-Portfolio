@@ -69,7 +69,10 @@ export const getProjects = asyncHandler(async (req, res) => {
   const limit = Math.min(toPositiveInt(req.query.limit, 9), 24);
   const skip = (page - 1) * limit;
 
-  const filter = { isPublished: true };
+  const filter = {
+    isPublished: true,
+    ...(req.query.featured === "true" ? { featured: true } : {}),
+  };
   const [projects, total] = await Promise.all([
     Project.find(filter)
       .sort({ featured: -1, sortOrder: 1, createdAt: -1 })
