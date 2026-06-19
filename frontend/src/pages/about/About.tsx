@@ -78,6 +78,7 @@ export default function About() {
           description="I care about the small details - motion curves, spacing, and how copy reads. I care even more about shipping: interfaces that load fast, feel intuitive, and stay maintainable."
         />
 
+        {/* About of me some details */}
         <div className="mt-14 grid grid-cols-2 gap-3 md:grid-cols-4">
           {skills.map((skill, index) => (
             <motion.div
@@ -97,6 +98,7 @@ export default function About() {
           ))}
         </div>
 
+        {/* About me timeline & journey */}
         <div className="mt-20 grid grid-cols-1 gap-10 md:grid-cols-[220px_1fr]">
           <div>
             <h3 className="font-display text-2xl font-bold">Journey</h3>
