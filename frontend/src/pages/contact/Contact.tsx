@@ -87,6 +87,8 @@ export default function Contact() {
   return (
     <section id="contact" className="relative py-24 md:py-32 text-black">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
+
+        {/* contact details */}
         <div className="grid grid-cols-1 gap-12 md:grid-cols-[1fr_1.2fr] md:gap-16">
           <div>
             <SectionHeading
@@ -128,6 +130,7 @@ export default function Contact() {
             </div>
           </div>
 
+          {/* contact form */}
           <motion.form
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
