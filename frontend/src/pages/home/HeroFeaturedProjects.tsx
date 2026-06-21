@@ -24,6 +24,8 @@ function FeaturedProjectSkeleton({ isHero = false }: { isHero?: boolean }) {
   );
 }
 
+{/* Main project card component for displaying featured projects, with a larger layout for the hero project and a consistent design for all projects. It includes an image, title, stack tags, summary, and a call-to-action to view the project details. */}
+
 function FeaturedProjectCard({ project, isHero = false }: { project: Project; isHero?: boolean }) {
   const summary = getProjectSummary(project);
 
@@ -81,6 +83,8 @@ export default function HeroFeaturedProjects() {
   }
 
   return (
+    /* Featured projects section on the homepage, showcasing a selection of highlighted projects with a call-to-action to view more. */
+
     <section className="w-full bg-[var(--color-bg)] px-4 py-20 transition-colors duration-300 sm:px-8 md:px-12">
       <div className="mx-auto flex max-w-6xl flex-col gap-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
