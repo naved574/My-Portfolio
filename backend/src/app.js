@@ -9,6 +9,7 @@ const app = express();
 const normalizeOrigin = (origin) => origin.replace(/\/$/, "");
 const allowedOrigins = [
   env.CLIENT_URL,
+  "https://devnaved.dev",
   "https://dev-naved-portfolio-03.vercel.app",
   ...env.CLIENT_URLS.split(",").map((origin) => origin.trim()),
 ].filter(Boolean).map(normalizeOrigin);
