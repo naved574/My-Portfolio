@@ -42,7 +42,8 @@ export const signup = asyncHandler(async (req, res) => {
 
 export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  const user = await PublicUser.findOne({ email: email.toLowerCase() }).select("+passwordHash");
+  const normalizedEmail = String(email || "").toLowerCase().trim();
+  const user = await PublicUser.findOne({ email: normalizedEmail }).select("+passwordHash");
 
   if (!user) {
     throw new ApiError(401, "Invalid email or password.");

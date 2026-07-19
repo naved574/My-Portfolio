@@ -2,10 +2,7 @@ import axios from "axios";
 import { getAdminToken, getUserToken } from "./auth";
 
 export const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  (import.meta.env.PROD
-    ? "https://my-portfolio-zgxc.onrender.com/api"
-    : "http://localhost:3000/api");
+  import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || "/api";
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
@@ -25,4 +22,10 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-export const unwrapData = <T>(response: { data: { data: T } }) => response.data.data;
+export const unwrapData = <T>(response: { data: { data?: T } }) => {
+  if (response.data.data === undefined) {
+    throw new Error("The API response did not contain a data payload.");
+  }
+
+  return response.data.data;
+};

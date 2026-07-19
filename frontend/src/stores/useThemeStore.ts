@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type Theme = "light" | "dark" | "system";
+type Theme = "light" | "dark";
 type ResolvedTheme = "light" | "dark";
 
 type ThemeState = {
@@ -12,28 +12,20 @@ type ThemeState = {
 
 const THEME_STORAGE_KEY = "theme";
 
-const resolveTheme = (theme: Theme): ResolvedTheme => {
-  if (theme !== "system") return theme;
-  if (typeof window === "undefined") return "light";
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-};
-
 const applyTheme = (theme: Theme) => {
   if (typeof document === "undefined") return;
-  const resolvedTheme = resolveTheme(theme);
-
-  document.documentElement.classList.toggle("dark", resolvedTheme === "dark");
-  document.documentElement.style.colorScheme = resolvedTheme;
+  document.documentElement.classList.toggle("dark", theme === "dark");
+  document.documentElement.style.colorScheme = theme;
 };
 
 const getInitialTheme = (): Theme => {
   if (typeof window === "undefined") return "light";
 
   const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
-  if (savedTheme === "dark" || savedTheme === "light" || savedTheme === "system") {
+  if (savedTheme === "dark" || savedTheme === "light") {
     return savedTheme;
   }
-  return "system";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 };
 
 const persistTheme = (theme: Theme) => {
@@ -46,27 +38,17 @@ applyTheme(initialTheme);
 
 export const useThemeStore = create<ThemeState>((set) => ({
   theme: initialTheme,
-  resolvedTheme: resolveTheme(initialTheme),
+  resolvedTheme: initialTheme,
   setTheme: (theme) => {
     applyTheme(theme);
     persistTheme(theme);
-    set({ theme, resolvedTheme: resolveTheme(theme) });
+    set({ theme, resolvedTheme: theme });
   },
   toggleTheme: () =>
     set((state) => {
-      const theme = state.theme === "light" ? "dark" : state.theme === "dark" ? "system" : "light";
+      const theme = state.theme === "light" ? "dark" : "light";
       applyTheme(theme);
       persistTheme(theme);
-      return { theme, resolvedTheme: resolveTheme(theme) };
+      return { theme, resolvedTheme: theme };
     }),
 }));
-
-if (typeof window !== "undefined") {
-  const media = window.matchMedia("(prefers-color-scheme: dark)");
-  media.addEventListener("change", () => {
-    const { theme, setTheme } = useThemeStore.getState();
-    if (theme === "system") {
-      setTheme("system");
-    }
-  });
-}

@@ -1,16 +1,13 @@
-import { Laptop, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useThemeStore } from "@/stores/useThemeStore";
 
 export default function ThemeToggle() {
   const theme = useThemeStore((state) => state.theme);
-  const resolvedTheme = useThemeStore((state) => state.resolvedTheme);
   const toggleTheme = useThemeStore((state) => state.toggleTheme);
   const title =
     theme === "light"
-      ? "Theme: Light (click to switch)"
-      : theme === "dark"
-        ? "Theme: Dark (click to switch)"
-        : `Theme: System (${resolvedTheme}) (click to switch)`;
+      ? "Switch to Dark Theme"
+      : "Switch to Light Theme";
 
   return (
     <button
@@ -18,9 +15,9 @@ export default function ThemeToggle() {
       onClick={toggleTheme}
       aria-label={title}
       title={title}
-      className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-bg)] text-[color:var(--color-text)] transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-text)]"
+      className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] text-[color:var(--color-text)] transition-all hover:scale-105 active:scale-95 duration-200"
     >
-      {theme === "system" ? <Laptop size={16} /> : resolvedTheme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+      {theme === "dark" ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} className="text-indigo-500" />}
     </button>
   );
 }

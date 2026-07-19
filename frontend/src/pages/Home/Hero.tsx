@@ -52,7 +52,7 @@ export default function Hero() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="order-2 md:order-1"
         >
-          <motion.span
+          {/* <motion.span
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05, duration: 0.4 }}
@@ -63,7 +63,7 @@ export default function Hero() {
               <span className="relative h-2 w-2 rounded-full bg-primary" />
             </span>
             Available for new projects
-          </motion.span>
+          </motion.span> */}
 
           <motion.h1
             initial={{ opacity: 0, y: 16 }}

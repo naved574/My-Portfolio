@@ -40,7 +40,7 @@ type UserMe = {
   };
 };
 
-type Theme = "light" | "dark" | "system";
+type Theme = "light" | "dark";
 
 const navLinks = [
   { path: "/", label: "Home", icon: Home },
@@ -162,9 +162,6 @@ function SettingsMenu({ isAdmin, isLoggedIn, theme, setTheme, go, logout }: Sett
             <DropdownMenuItem onClick={() => setTheme("dark")} className="rounded-lg">
               Dark {theme === "dark" ? "*" : ""}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("system")} className="rounded-lg">
-              System {theme === "system" ? "*" : ""}
-            </DropdownMenuItem>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuItem className="rounded-lg">Privacy & Policy</DropdownMenuItem>
@@ -269,20 +266,23 @@ export default function Navbar() {
 
   return (
     <header
+      id="main-header"
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "border-b border-[color:var(--color-border)] [background-color:color-mix(in_srgb,var(--color-bg)_82%,transparent)] backdrop-blur-md"
+          ? "border-b border-[color:var(--color-border)] bg-[color:color-mix(in_srgb,var(--color-bg)_82%,transparent)] shadow-sm backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <nav id="main-nav" className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-2">
+          {/* Menu button: only visible on mobile/tablet screens */}
           <button
+            id="mobile-menu-trigger"
             onClick={() => setPanelOpen(true)}
-            className="grid h-10 w-10 cursor-pointer place-items-center rounded-xl bg-transparent text-[color:var(--color-text)] duration-300 hover:scale-110"
+            className="grid h-10 w-10 cursor-pointer place-items-center rounded-xl bg-transparent text-[color:var(--color-text)] duration-300 hover:scale-110 md:hidden"
             aria-label="Open navigation panel"
           >
-            <Menu size={25} />
+            <Menu size={22} />
           </button>
 
           <Link
@@ -297,9 +297,42 @@ export default function Navbar() {
           </Link>
         </div>
 
+        {/* Premium Desktop Navigation Bar with micro-animations */}
+        <div 
+          id="desktop-nav-container" 
+          className="hidden md:flex items-center gap-1.5 bg-black/[0.03] dark:bg-white/[0.03] border border-[color:var(--color-border)] rounded-full p-1 shadow-inner backdrop-blur-md"
+        >
+          {navLinks.map((link) => {
+            const isActive = pathname === link.path;
+            const Icon = link.icon;
+            return (
+              <Link
+                key={link.path}
+                to={link.path}
+                id={`desktop-nav-link-${link.label.toLowerCase()}`}
+                className={`relative flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs lg:text-sm font-semibold transition-all duration-300 ${
+                  isActive
+                    ? "text-primary dark:text-white"
+                    : "text-[color:var(--color-muted)] hover:text-[color:var(--color-text)]"
+                }`}
+              >
+                <Icon size={14} className={isActive ? "text-primary" : "text-[color:var(--color-muted)]"} />
+                <span>{link.label}</span>
+                {isActive && (
+                  <motion.span
+                    layoutId="active-desktop-pill"
+                    className="absolute inset-0 -z-10 rounded-full bg-white dark:bg-gray-800 shadow-[0_2px_8px_rgba(0,0,0,0.06)] border border-gray-100/80 dark:border-gray-700/80"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </Link>
+            );
+          })}
+        </div>
+
         <div className="flex items-center gap-2.5">
           <ThemeToggle />
-          <div className="hidden lg:block">
+          <div className="hidden md:block">
             <ActionAuth initials={initials} isLoggedIn={isLoggedIn} go={go} logout={logout} />
           </div>
         </div>
