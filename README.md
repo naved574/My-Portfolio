@@ -213,25 +213,6 @@ React • TypeScript • Tailwind CSS • Vite • Framer Motion • GSAP
 
 ---
 
-## 🏦 NexusBank
-
-A modern banking dashboard concept focused on clean UI, scalability, and real-world architecture.
-
-### Highlights
-
-- Banking Dashboard
-- Analytics Interface
-- Responsive Layout
-- Authentication Ready
-- Dashboard Components
-- Professional Design System
-
-**Tech Stack**
-
-React • TypeScript • Node.js • MongoDB
-
----
-
 ## 💼 Portfolio Website
 
 This repository itself is one of my primary projects.
